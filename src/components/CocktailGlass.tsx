@@ -1,15 +1,22 @@
 "use client";
 
-// Fixed: liquid strip through glass recolored to --bg; loops continuously while section is active.
+// Cocktail Lottie — layer-specific recolor + harmonized stroke weight and round caps.
 // Recurring bug: unbounded Lottie height made sticky cocktail glass jitter up/down on scroll.
 
 import Lottie, { type LottieRefCurrentProps } from "lottie-react";
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import cocktailGlassData from "@/assets/cocktail-glass.json";
+import { useTimelineLottie } from "@/hooks/useTimelineLottie";
+import {
+  cloneLottie,
+  harmonizeLottieStrokes,
+  LOTTIE_BG,
+  LOTTIE_RENDERER_SETTINGS,
+  LOTTIE_WHITE,
+  type LottieRGBA,
+} from "@/lib/lottieHarmonize";
 
-const BG_LOTTIE: [number, number, number, number] = [17 / 255, 17 / 255, 17 / 255, 1];
-const GLASS_LOTTIE: [number, number, number, number] = [1, 1, 1, 1];
-const REDUCED_MOTION_FRAME = cocktailGlassData.op - 1;
+const COCKTAIL_HOLD_FRAME = cocktailGlassData.op - 1;
 
 const SPARKLE_LAYERS = new Set(["Line2", "Line3", "Line4", "Line5"]);
 const GLASS_LAYERS = new Set(["Coupe1 Outlines", "Stem Outlines"]);
@@ -32,7 +39,7 @@ function isLottieWhite(color: number[]) {
 function replaceFillColors(
   value: unknown,
   match: (color: number[]) => boolean,
-  replacement: [number, number, number, number],
+  replacement: LottieRGBA,
 ): unknown {
   if (Array.isArray(value)) {
     return value.map((item) => replaceFillColors(item, match, replacement));
@@ -60,63 +67,40 @@ function replaceFillColors(
   return next;
 }
 
-function replaceBlackColors(value: unknown, replacement: [number, number, number, number]): unknown {
-  return replaceFillColors(value, isLottieBlack, replacement);
-}
-
 function prepareCocktailAnimation() {
-  return {
-    ...cocktailGlassData,
-    layers: cocktailGlassData.layers
+  const base = cloneLottie(cocktailGlassData);
+
+  const recolored = {
+    ...base,
+    layers: base.layers
       .filter((layer) => layer.nm !== "Plate_white")
       .map((layer) => {
-        const copy = JSON.parse(JSON.stringify(layer)) as (typeof cocktailGlassData.layers)[number];
+        const copy = cloneLottie(layer);
 
         if (SPARKLE_LAYERS.has(layer.nm)) {
-          return replaceBlackColors(copy, BG_LOTTIE) as typeof layer;
+          return replaceFillColors(copy, isLottieBlack, LOTTIE_BG) as typeof layer;
         }
 
         if (GLASS_LAYERS.has(layer.nm)) {
-          return replaceBlackColors(copy, GLASS_LOTTIE) as typeof layer;
+          return replaceFillColors(copy, isLottieBlack, LOTTIE_WHITE) as typeof layer;
         }
 
         if (layer.nm === LIQUID_LAYER) {
-          return replaceFillColors(copy, isLottieWhite, BG_LOTTIE) as typeof layer;
+          return replaceFillColors(copy, isLottieWhite, LOTTIE_BG) as typeof layer;
         }
 
         return copy;
       }),
   };
+
+  return harmonizeLottieStrokes(recolored, recolored.w ?? 500);
 }
 
 export function CocktailGlass({ isActive = false }: CocktailGlassProps) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
-  const hasStarted = useRef(false);
   const animationData = useMemo(() => prepareCocktailAnimation(), []);
 
-  useEffect(() => {
-    const player = lottieRef.current;
-    if (!player) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion) {
-      player.goToAndStop(REDUCED_MOTION_FRAME, true);
-      return;
-    }
-
-    if (isActive) {
-      if (!hasStarted.current) {
-        hasStarted.current = true;
-        player.goToAndPlay(0, true);
-      } else {
-        player.play();
-      }
-      return;
-    }
-
-    player.pause();
-  }, [isActive]);
+  useTimelineLottie(lottieRef, isActive, COCKTAIL_HOLD_FRAME);
 
   return (
     <div className="cocktail-scene" aria-hidden="true">
@@ -125,8 +109,8 @@ export function CocktailGlass({ isActive = false }: CocktailGlassProps) {
         animationData={animationData}
         loop
         autoplay={false}
-        className="lottie-cocktail"
-        rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
+        className="lottie-cocktail timeline-lottie"
+        rendererSettings={LOTTIE_RENDERER_SETTINGS}
       />
     </div>
   );

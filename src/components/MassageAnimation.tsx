@@ -1,43 +1,43 @@
 "use client";
 
-// Sunset Lottie — harmonized white line art for dark timeline.
+// Massage Lottie — harmonized white line art for dark timeline.
+// Recurring bug: unbounded Lottie height made sticky timeline visuals jitter on scroll.
 
 import Lottie, { type LottieRefCurrentProps } from "lottie-react";
 import { useMemo, useRef } from "react";
-import sunsetData from "@/assets/sunset.json";
+import massageAnimationData from "@/assets/massage-animation.json";
 import { useTimelineLottie } from "@/hooks/useTimelineLottie";
 import {
   harmonizeTimelineLottie,
   LOTTIE_RENDERER_SETTINGS,
 } from "@/lib/lottieHarmonize";
 
-const SUNSET_HOLD_FRAME = 85;
-const ANIMATION_OUT_POINT = 90;
+const MASSAGE_HOLD_FRAME = 30;
 
-type SunsetAnimationProps = {
+type MassageAnimationProps = {
   isActive?: boolean;
 };
 
-export function SunsetAnimation({ isActive = false }: SunsetAnimationProps) {
+export function MassageAnimation({ isActive = false }: MassageAnimationProps) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const animationData = useMemo(
     () => ({
-      ...harmonizeTimelineLottie(sunsetData, "sunset-black"),
-      op: ANIMATION_OUT_POINT,
+      ...harmonizeTimelineLottie(massageAnimationData, "white-line"),
+      op: 61,
     }),
     [],
   );
 
-  useTimelineLottie(lottieRef, isActive, SUNSET_HOLD_FRAME);
+  useTimelineLottie(lottieRef, isActive, MASSAGE_HOLD_FRAME);
 
   return (
-    <div className="sunset-scene" aria-hidden="true">
+    <div className="massage-scene" aria-hidden="true">
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
         loop
         autoplay={false}
-        className="lottie-sunset timeline-lottie"
+        className="lottie-massage timeline-lottie"
         rendererSettings={LOTTIE_RENDERER_SETTINGS}
       />
     </div>

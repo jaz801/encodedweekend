@@ -1,44 +1,40 @@
 "use client";
 
-// Lunch cutlery Lottie — harmonized white line art for dark timeline.
+// Yoga mat roll Lottie — user-provided animation; black strokes recolored white for dark timeline.
 // Recurring bug: unbounded Lottie height made sticky timeline visuals jitter on scroll.
 
 import Lottie, { type LottieRefCurrentProps } from "lottie-react";
 import { useMemo, useRef } from "react";
-import lunchCutleryData from "@/assets/lunch-cutlery.json";
+import yogaAnimationData from "@/assets/yoga-animation.json";
 import { useTimelineLottie } from "@/hooks/useTimelineLottie";
 import {
   harmonizeTimelineLottie,
   LOTTIE_RENDERER_SETTINGS,
 } from "@/lib/lottieHarmonize";
 
-const CUTLERY_HOLD_FRAME = 28;
-const ANIMATION_OUT_POINT = 30;
+const EXERCISE_HOLD_FRAME = 281;
 
-type LunchAnimationProps = {
+type ExerciseAnimationProps = {
   isActive?: boolean;
 };
 
-export function LunchAnimation({ isActive = false }: LunchAnimationProps) {
+export function ExerciseAnimation({ isActive = false }: ExerciseAnimationProps) {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const animationData = useMemo(
-    () => ({
-      ...harmonizeTimelineLottie(lunchCutleryData, "lunch-green"),
-      op: ANIMATION_OUT_POINT,
-    }),
+    () => harmonizeTimelineLottie(yogaAnimationData, "white-line"),
     [],
   );
 
-  useTimelineLottie(lottieRef, isActive, CUTLERY_HOLD_FRAME);
+  useTimelineLottie(lottieRef, isActive, EXERCISE_HOLD_FRAME);
 
   return (
-    <div className="lunch-scene" aria-hidden="true">
+    <div className="exercise-scene" aria-hidden="true">
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
         loop
         autoplay={false}
-        className="lottie-lunch timeline-lottie"
+        className="lottie-exercise timeline-lottie"
         rendererSettings={LOTTIE_RENDERER_SETTINGS}
       />
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 // Fixed: green juice menu shows three drink cards side-by-side with a close button.
+// Fixed: timeline lead is Lock in a green juice.
 
 import { useEffect, useId, useRef, useState } from "react";
 import { DrinkGlassMini } from "./DrinkGlassMini";
@@ -90,7 +91,6 @@ export function GreenJuiceLead() {
   return (
     <div ref={rowRef} className="timeline-lead-row">
       <p className="timeline-lead">
-        Day 1 — with{" "}
         <button
           type="button"
           className="green-juice-trigger"
@@ -98,7 +98,7 @@ export function GreenJuiceLead() {
           aria-controls={panelId}
           onClick={() => setOpen((current) => !current)}
         >
-          green juice
+          Lock in a green juice
         </button>
         .
       </p>

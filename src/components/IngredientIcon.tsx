@@ -1,4 +1,5 @@
-// Fixed: ingredient icons for green juice and lunch/brunch recipe cards.
+// Fixed: ingredient icons for green juice, lunch/brunch, breakfast plate, and soup recipes.
+// Fixed: added pea and mint icons for Day 2 green pea soup.
 
 type IngredientIconProps = {
   name: string;
@@ -520,6 +521,93 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
         <svg {...shared}>
           <ellipse cx="10" cy="10" rx="7" ry="5" stroke="currentColor" strokeWidth="1.4" />
           <path d="M5 10h10" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        </svg>
+      );
+    case "egg":
+      return (
+        <svg {...shared}>
+          <ellipse cx="10" cy="11" rx="5.5" ry="7" stroke="currentColor" strokeWidth="1.4" />
+          <circle cx="10" cy="12" r="2" fill="currentColor" opacity="0.35" />
+        </svg>
+      );
+    case "mushroom":
+      return (
+        <svg {...shared}>
+          <ellipse cx="10" cy="8" rx="6" ry="4" stroke="currentColor" strokeWidth="1.4" />
+          <path d="M8 12v5M12 12v5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+      );
+    case "beans":
+      return (
+        <svg {...shared}>
+          <ellipse cx="7" cy="11" rx="2.2" ry="3" stroke="currentColor" strokeWidth="1.2" />
+          <ellipse cx="11" cy="10" rx="2" ry="2.8" stroke="currentColor" strokeWidth="1.2" />
+          <ellipse cx="14" cy="12" rx="2.1" ry="3" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      );
+    case "cinnamon":
+      return (
+        <svg {...shared}>
+          <path
+            d="M6 14c2-6 4-8 4-10s2 2 4 8M10 14c1-4 2-6 2-8"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "oats":
+      return (
+        <svg {...shared}>
+          <ellipse cx="10" cy="12" rx="6" ry="4" stroke="currentColor" strokeWidth="1.3" />
+          {[
+            [7, 11],
+            [10, 10],
+            [13, 11],
+            [8.5, 13],
+            [11.5, 13],
+          ].map(([cx, cy]) => (
+            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="0.8" fill="currentColor" opacity="0.7" />
+          ))}
+        </svg>
+      );
+    case "flour":
+      return (
+        <svg {...shared}>
+          <path
+            d="M7 6h6l2 3v8H5V9l2-3Z"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          <path d="M8 14h4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      );
+    case "pea":
+      return (
+        <svg {...shared}>
+          <circle cx="8" cy="10" r="2.2" fill="currentColor" />
+          <circle cx="12" cy="8.5" r="2.2" fill="currentColor" />
+          <circle cx="12" cy="13" r="2.2" fill="currentColor" />
+          <circle cx="15.5" cy="10.5" r="2.2" fill="currentColor" opacity="0.85" />
+        </svg>
+      );
+    case "mint":
+      return (
+        <svg {...shared}>
+          <path
+            d="M10 15 C10 11 8 8 10 5 C11 8 10 11 10 15Z"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M10 5 C12 7 13 10 12 14"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+          <path d="M10 15 L10 17" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
         </svg>
       );
     default:

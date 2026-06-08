@@ -2,6 +2,7 @@
 
 import { DayButtons } from "@/components/DayButtons";
 import { DayOneTimeline } from "@/components/DayOneTimeline";
+import { DayTwoTimeline } from "@/components/DayTwoTimeline";
 import { DayPlaceholder } from "@/components/DayPlaceholder";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
@@ -25,8 +26,8 @@ export default function Home() {
       </header>
 
       <DayOneTimeline />
-      <DayPlaceholder id="day-2" day="Day 2" label="Training & connection" />
-      <DayPlaceholder id="day-3" day="Day 3" label="Integration & close" />
+      <DayTwoTimeline />
+      <DayPlaceholder id="day-3" day="Day 3" label="Celebration" />
 
       <Footer />
     </>

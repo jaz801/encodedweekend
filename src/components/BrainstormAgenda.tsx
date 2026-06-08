@@ -1,8 +1,10 @@
 "use client";
 
-// Brainstorm timeline: three clickable prompts open detail cards (accordion-style).
+// Optimising the Now — three clickable prompts open detail cards (accordion-style).
+// Fixed: Tabler icons on each detail card — presentation, chalkboard, devices-code.
 
 import { useEffect, useId, useRef, useState } from "react";
+import { BrainstormOneIcon } from "./BrainstormOneIcon";
 
 type AgendaId = "working" | "better" | "hackathon";
 
@@ -13,10 +15,15 @@ const agendaItems = [
     eyebrow: "Opening round",
     title: "What is working",
     body: (
-      <p>
-        Everyone answers in front of the group. Then we ask the people to imagine how Encoded
-        looks in 2027, and write down the vision, mission, and feeling.
-      </p>
+      <>
+        <div className="brainstorm-detail-visual">
+          <BrainstormOneIcon variant="working" />
+        </div>
+        <p>
+          Everyone answers in front of the group. Then we ask the people to imagine how Encoded
+          looks in 2027, and write down the vision, mission, and feeling.
+        </p>
+      </>
     ),
   },
   {
@@ -25,15 +32,20 @@ const agendaItems = [
     eyebrow: "Ideation sprint",
     title: "Make Encoded better",
     body: (
-      <ul className="brainstorm-detail-points">
-        <li>8 people: 7 from your team plus 1 facilitator.</li>
+      <>
+        <div className="brainstorm-detail-visual">
+          <BrainstormOneIcon variant="better" />
+        </div>
+        <ul className="brainstorm-detail-points">
+          <li>8 people: 7 from your team plus 1 facilitator.</li>
         <li>
           Split into 4 pairs (one pair includes the facilitator). Each pair gets a rolling
           whiteboard.
         </li>
         <li>15 minutes to write down your idea.</li>
-        <li>10-minute presentations, then vote on the winning idea.</li>
-      </ul>
+          <li>10-minute presentations, then vote on the winning idea.</li>
+        </ul>
+      </>
     ),
   },
   {
@@ -43,6 +55,9 @@ const agendaItems = [
     title: "Micro Hackathon",
     body: (
       <>
+        <div className="brainstorm-detail-visual">
+          <BrainstormOneIcon variant="hackathon" />
+        </div>
         <p>Build the winning idea in the remaining 30 minutes.</p>
         <ol className="brainstorm-detail-steps">
           <li>Decide who takes what role.</li>

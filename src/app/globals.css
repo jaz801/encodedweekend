@@ -624,9 +624,19 @@ footer .fine .gold {
   margin-top: 40px;
 }
 
+.timeline-section-no-visual {
+  grid-template-columns: 1fr;
+}
+
 .timeline-section-visual {
   align-self: stretch;
+  display: flex;
+  justify-content: center;
   min-height: 0;
+}
+
+.timeline-section-center .timeline-section-visual {
+  align-items: center;
 }
 
 .timeline-section-sticky {
@@ -635,9 +645,26 @@ footer .fine .gold {
   top: 120px;
   width: 120px;
   height: 120px;
-  margin: 30px auto 0;
+  margin: 0;
+  padding-top: 8px;
   flex-shrink: 0;
-  contain: layout paint size;
+  contain: layout paint;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.timeline-section-center .timeline-section-sticky {
+  padding-top: 0;
+  align-items: center;
+}
+
+.timeline-section-sticky .reveal-left {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .timeline-section-content {
@@ -797,7 +824,167 @@ footer .fine .gold {
   text-decoration-color: rgba(196, 164, 108, 0.8);
 }
 
+.choice-trigger {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(196, 164, 108, 0.45);
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+}
+
+.choice-trigger:hover,
+.choice-trigger[aria-expanded="true"] {
+  color: var(--gold-cta);
+  text-decoration-color: rgba(230, 186, 74, 0.75);
+}
+
+.choice-trigger-green {
+  color: #3cb371;
+  text-decoration-color: rgba(60, 179, 113, 0.45);
+}
+
+.choice-trigger-green:hover,
+.choice-trigger-green[aria-expanded="true"] {
+  color: #72e88a;
+  text-decoration-color: rgba(114, 232, 138, 0.7);
+}
+
+.choice-benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.choice-benefits li {
+  position: relative;
+  padding-left: 12px;
+  font-size: 11px;
+  color: var(--text-bright);
+  line-height: 1.4;
+}
+
+.choice-benefits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.exercise-class-mini {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 0 auto 8px;
+  color: var(--gold);
+}
+
+.massage-flag-mini {
+  width: 48px;
+  height: 36px;
+  display: block;
+  margin: 0 auto 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.relaxation-experience-mini {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.massage-guide {
+  font-size: 11.5px;
+  color: var(--gold);
+  line-height: 1.45;
+  margin-bottom: 10px;
+  max-width: none;
+}
+
+.experience-intensity {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  max-width: none;
+}
+
+.experience-intensity-low {
+  color: #72c48a;
+}
+
+.experience-intensity-medium {
+  color: var(--gold-cta);
+}
+
+.experience-intensity-high {
+  color: #e8927c;
+}
+
+.float-tank-card {
+  max-width: 100%;
+}
+
+.float-tank-body {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.float-tank-visual {
+  display: grid;
+  place-items: center;
+  padding: 12px 8px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #121212, #0d0d0d);
+  border: 1px solid rgba(39, 39, 39, 0.85);
+}
+
+.float-tank-icon {
+  width: 72px;
+  height: auto;
+  color: var(--gold);
+}
+
+.float-tank-copy p {
+  max-width: none;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.float-tank-note {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.float-tank-note strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
 .lunch-bowl-mini,
+.soup-bowl-mini,
 .dinner-plate-mini {
   width: 52px;
   height: auto;
@@ -991,6 +1178,10 @@ footer .fine .gold {
 }
 
 @media (max-width: 840px) {
+  .float-tank-body {
+    grid-template-columns: 1fr;
+  }
+
   .juice-menu-list {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1194,6 +1385,29 @@ footer .fine .gold {
   padding-left: 2px;
 }
 
+.brainstorm-detail-visual {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.bean-bag-figure-mini,
+.team-frequency-mini {
+  width: 28px;
+  height: 28px;
+  display: block;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.brainstorm-tabler-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
 .brainstorm-detail-note {
   margin-top: 12px;
   padding-top: 12px;
@@ -1215,22 +1429,79 @@ footer .fine .gold {
 .brainstorm-scene,
 .lunch-scene,
 .sunset-scene,
-.dinner-pot-scene {
+.dinner-pot-scene,
+.sleep-scene,
+.exercise-scene,
+.breakfast-scene,
+.massage-scene,
+.relaxation-scene {
+  position: relative;
   width: 120px;
   height: 120px;
   flex-shrink: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breakfast-plate-mini {
+  width: 52px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.timeline-lead-row-secondary {
+  margin-top: 0;
+}
+
+.float-tank-icon-card {
+  width: 88px;
+  height: auto;
+  display: block;
 }
 
 .cocktail-scene .lottie-cocktail,
 .brainstorm-scene .lottie-brainstorm,
 .lunch-scene .lottie-lunch,
 .sunset-scene .lottie-sunset,
-.dinner-pot-scene .lottie-dinner-pot {
+.dinner-pot-scene .lottie-dinner-pot,
+.sleep-scene .lottie-sleep,
+.exercise-scene .lottie-exercise,
+.breakfast-scene .lottie-breakfast,
+.massage-scene .lottie-massage,
+.relaxation-scene .lottie-relaxation {
   display: block;
-  width: 120px;
-  height: 120px;
+  width: 120px !important;
+  height: 120px !important;
+  max-width: 120px;
+  max-height: 120px;
   pointer-events: none;
+}
+
+.cocktail-scene svg,
+.brainstorm-scene svg,
+.lunch-scene svg,
+.sunset-scene svg,
+.dinner-pot-scene svg,
+.sleep-scene svg,
+.exercise-scene svg,
+.breakfast-scene svg,
+.massage-scene svg,
+.relaxation-scene svg,
+.cocktail-scene canvas,
+.brainstorm-scene canvas,
+.lunch-scene canvas,
+.sunset-scene canvas,
+.dinner-pot-scene canvas,
+.sleep-scene canvas,
+.exercise-scene canvas,
+.breakfast-scene canvas,
+.massage-scene canvas,
+.relaxation-scene canvas {
+  max-width: 120px !important;
+  max-height: 120px !important;
 }
 
 @media (max-width: 840px) {
