@@ -2,6 +2,7 @@
 
 // Optimising the Now — three clickable prompts open detail cards (accordion-style).
 // Fixed: Tabler icons on each detail card — presentation, chalkboard, devices-code.
+// Fixed: Opening round and Make Encoded better cards rewritten for clearer step-by-step flow.
 
 import { useEffect, useId, useRef, useState } from "react";
 import { BrainstormOneIcon } from "./BrainstormOneIcon";
@@ -13,15 +14,25 @@ const agendaItems = [
     id: "working" as const,
     label: "What are we doing as a team that is working?",
     eyebrow: "Opening round",
-    title: "What is working",
+    title: "What's working",
     body: (
       <>
         <div className="brainstorm-detail-visual">
           <BrainstormOneIcon variant="working" />
         </div>
         <p>
-          Everyone answers in front of the group. Then we ask the people to imagine how Encoded
-          looks in 2027, and write down the vision, mission, and feeling.
+          Start with what&apos;s already landing. Name what&apos;s working before you sketch where
+          Encoded goes next.
+        </p>
+        <span className="juice-recipe-label">Step 1 — Share out loud</span>
+        <p className="brainstorm-detail-note">
+          Each person answers in front of the group: what&apos;s working for us as a team right
+          now?
+        </p>
+        <span className="juice-recipe-label">Step 2 — Picture 2027</span>
+        <p className="brainstorm-detail-note">
+          Then imagine Encoded in 2027 — not a slide deck, a felt future. Write down the vision,
+          mission, and the feeling you want the company to carry.
         </p>
       </>
     ),
@@ -36,15 +47,26 @@ const agendaItems = [
         <div className="brainstorm-detail-visual">
           <BrainstormOneIcon variant="better" />
         </div>
-        <ul className="brainstorm-detail-points">
-          <li>8 people: 7 from your team plus 1 facilitator.</li>
-        <li>
-          Split into 4 pairs (one pair includes the facilitator). Each pair gets a rolling
+        <p>
+          Turn improvements into concrete ideas — fast. Pairs, whiteboards, one vote at the end.
+        </p>
+        <span className="juice-recipe-label">Step 1 — Form up</span>
+        <p className="brainstorm-detail-note">
+          8 people in the room: 7 from your team plus 1 facilitator.
+        </p>
+        <span className="juice-recipe-label">Step 2 — Pair off</span>
+        <p className="brainstorm-detail-note">
+          Split into 4 pairs — one pair includes the facilitator. Each pair gets a rolling
           whiteboard.
-        </li>
-        <li>15 minutes to write down your idea.</li>
-          <li>10-minute presentations, then vote on the winning idea.</li>
-        </ul>
+        </p>
+        <span className="juice-recipe-label">Step 3 — Write (15 min)</span>
+        <p className="brainstorm-detail-note">
+          15 minutes to draft your idea. Go deep enough to present — not to polish.
+        </p>
+        <span className="juice-recipe-label">Step 4 — Present and vote</span>
+        <p className="brainstorm-detail-note">
+          Each pair gets up to 10 minutes to present. The room votes on the winning idea.
+        </p>
       </>
     ),
   },

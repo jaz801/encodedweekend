@@ -1,11 +1,12 @@
-// Hero plus day navigation; Day 1 timeline with Lottie cocktail glass.
+// Hero plus day navigation; Day 1–3 timelines with expandable menus.
 
 import { DayButtons } from "@/components/DayButtons";
 import { DayOneTimeline } from "@/components/DayOneTimeline";
 import { DayTwoTimeline } from "@/components/DayTwoTimeline";
-import { DayPlaceholder } from "@/components/DayPlaceholder";
+import { DayThreeTimeline } from "@/components/DayThreeTimeline";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
+import { OrganizeThisNote } from "@/components/OrganizeThisNote";
 import { Typewriter } from "@/components/Typewriter";
 
 export default function Home() {
@@ -27,8 +28,9 @@ export default function Home() {
 
       <DayOneTimeline />
       <DayTwoTimeline />
-      <DayPlaceholder id="day-3" day="Day 3" label="Celebration" />
+      <DayThreeTimeline />
 
+      <OrganizeThisNote />
       <Footer />
     </>
   );

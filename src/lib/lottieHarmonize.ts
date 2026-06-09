@@ -1,5 +1,8 @@
 // Timeline Lottie harmonization — one animator's hand across every sticky visual.
 // Normalizes stroke weight, round caps/joins, and recolors to the site palette.
+// Fixed: walk preset recolors Day 3 walking figure strokes white and hides lime backdrop.
+// Fixed: spa preset drops bg plate path instead of nested groups that hid the Lottie render.
+// Fixed: spa layer re-centered in comp so sticky column aligns with other timeline visuals.
 
 export type LottieRGBA = [number, number, number, number];
 
@@ -51,6 +54,84 @@ function isExerciseTeal(color: number[]) {
 
 function isLunchGreen(color: number[]) {
   return color.length >= 3 && color[1] > 0.45 && color[0] < 0.45;
+}
+
+function isWalkGreen(color: number[]) {
+  return color.length >= 3 && color[1] > 0.95 && color[0] > 0.5 && color[2] < 0.05;
+}
+
+function isHackathonLightGray(color: number[]) {
+  return color.length >= 3 && color[0] > 0.55 && color[1] > 0.55 && color[2] > 0.55;
+}
+
+function isHackathonMidGray(color: number[]) {
+  return (
+    color.length >= 3 &&
+    color[0] > 0.45 &&
+    color[0] < 0.75 &&
+    color[1] > 0.45 &&
+    color[1] < 0.75 &&
+    color[2] > 0.45 &&
+    color[2] < 0.75
+  );
+}
+
+function isHackathonDarkGray(color: number[]) {
+  return (
+    color.length >= 3 &&
+    color[0] > 0.15 &&
+    color[0] < 0.4 &&
+    color[1] > 0.15 &&
+    color[1] < 0.4 &&
+    color[2] > 0.15 &&
+    color[2] < 0.4
+  );
+}
+
+function isHackathonMaroon(color: number[]) {
+  return (
+    color.length >= 3 &&
+    color[0] > 0.4 &&
+    color[1] < 0.15 &&
+    color[2] > 0.1 &&
+    color[2] < 0.25
+  );
+}
+
+function isSpaGray(color: number[]) {
+  return (
+    color.length >= 3 &&
+    color[0] > 0.25 &&
+    color[0] < 0.55 &&
+    color[1] > 0.25 &&
+    color[1] < 0.55 &&
+    color[2] > 0.25 &&
+    color[2] < 0.55
+  );
+}
+
+/** Spa export bundles a square bg plate with steam paths under one fill — drop the plate only. */
+function prepareSpaLottie<T>(data: T): T {
+  const next = cloneLottie(data) as T & {
+    layers?: Array<{
+      shapes?: Array<{
+        it?: unknown[];
+      }>;
+    }>;
+  };
+
+  const group = next.layers?.[0]?.shapes?.[0];
+  const items = group?.it;
+
+  if (!group || !items || items.length < 6) {
+    return data;
+  }
+
+  const [pathOne, pathTwo, pathThree, , fill, groupTransform] = items;
+
+  group.it = [pathOne, pathTwo, pathThree, fill, groupTransform];
+
+  return next as T;
 }
 
 function replaceColors(
@@ -182,6 +263,9 @@ export type LottieColorPreset =
   | "lunch-green"
   | "sunset-black"
   | "dinner-fill"
+  | "walk"
+  | "spa"
+  | "hackathon"
   | "none";
 
 export function applyLottieColorPreset<T>(data: T, preset: LottieColorPreset): T {
@@ -201,6 +285,21 @@ export function applyLottieColorPreset<T>(data: T, preset: LottieColorPreset): T
       return replaceColors(data, isPureBlack, LOTTIE_WHITE) as T;
     case "dinner-fill":
       return replaceColors(data, isNotWhite, LOTTIE_WHITE) as T;
+    case "walk": {
+      let next = replaceColors(data, isNearBlack, LOTTIE_WHITE) as T;
+      next = replaceColors(next, isWalkGreen, LOTTIE_BG) as T;
+      return next;
+    }
+    case "spa":
+      return replaceColors(data, isSpaGray, LOTTIE_WHITE) as T;
+    case "hackathon": {
+      let next = replaceColors(data, isPureWhite, LOTTIE_WHITE) as T;
+      next = replaceColors(next, isHackathonLightGray, LOTTIE_WHITE) as T;
+      next = replaceColors(next, isHackathonMidGray, LOTTIE_GOLD) as T;
+      next = replaceColors(next, isHackathonDarkGray, LOTTIE_BG) as T;
+      next = replaceColors(next, isHackathonMaroon, LOTTIE_GOLD) as T;
+      return next;
+    }
     case "none":
     default:
       return data;
@@ -212,6 +311,9 @@ export function harmonizeTimelineLottie<T extends { w?: number }>(
   preset: LottieColorPreset,
 ): T {
   let next = cloneLottie(data);
+  if (preset === "spa") {
+    next = prepareSpaLottie(next);
+  }
   next = applyLottieColorPreset(next, preset);
   next = harmonizeLottieStrokes(next, next.w ?? 500);
   return next;

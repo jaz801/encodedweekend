@@ -1,5 +1,6 @@
 // Fixed: ingredient icons for green juice, lunch/brunch, breakfast plate, and soup recipes.
 // Fixed: added pea and mint icons for Day 2 green pea soup.
+// Fixed: added baguette, basil, jalapeño, pickle, and wrap icons for Day 3 brunch menu.
 
 type IngredientIconProps = {
   name: string;
@@ -608,6 +609,62 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
             strokeLinecap="round"
           />
           <path d="M10 15 L10 17" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      );
+    case "baguette":
+      return (
+        <svg {...shared}>
+          <path
+            d="M4 11 C4 8 7 6 10 6 C12 6 13 7 14 8 C15 7 16 6 18 6 C21 6 24 8 24 11 C24 13 22 14 20 14 L6 14 C5 14 4 13 4 11Z"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
+          />
+          <path d="M7 9h2M11 8h2M15 9h2M19 8h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.45" />
+        </svg>
+      );
+    case "basil":
+      return (
+        <svg {...shared}>
+          <path
+            d="M10 16 C10 12 7 9 10 5 C11 8 10 11 10 14 C12 11 13 8 12 5 C14 8 14 12 10 16Z"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          <path d="M10 16 L10 18" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      );
+    case "jalapeno":
+      return (
+        <svg {...shared}>
+          <path
+            d="M6 12 C6 9 8 7 11 7 C13 7 14 8 14 10 C16 10 17 11 17 13 C17 15 15 16 13 16 L8 16 C7 16 6 15 6 12Z"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
+          />
+          <path d="M11 7 L11 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      );
+    case "pickle":
+      return (
+        <svg {...shared}>
+          <rect x="7" y="5" width="6" height="12" rx="2" stroke="currentColor" strokeWidth="1.4" />
+          <path d="M8 8h4M8 11h4M8 14h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+          <ellipse cx="10" cy="5" rx="2" ry="1" fill="currentColor" opacity="0.35" />
+        </svg>
+      );
+    case "wrap":
+      return (
+        <svg {...shared}>
+          <ellipse cx="10" cy="11" rx="7" ry="4" stroke="currentColor" strokeWidth="1.4" />
+          <path
+            d="M5 11 C7 9 13 9 15 11 C13 13 7 13 5 11Z"
+            fill="currentColor"
+            opacity="0.25"
+          />
+          <path d="M6 10 L14 10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.45" />
         </svg>
       );
     default:
