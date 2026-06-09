@@ -4,7 +4,8 @@
    1440px+ spans full timeline section; 1920px+ widens layout, bleeds to wrap edges, scales up again.
    Fixed: spa Lottie comp is 50×50 so it read small — bumped spa sticky visual to 168px.
    Added: standalone organize-this button between Day 3 and footer.
-   Fixed: organizer note card scales up at 1440px+ and 1920px for wide monitors. */
+   Fixed: organizer note card scales up at 1440px+ and 1920px for wide monitors.
+   Fixed: mobile portrait menu cards use in-flow layout, stacked recipes, and readable type. */
 
 :root {
   --bg: #111111;
@@ -1695,6 +1696,30 @@ footer .fine .gold {
     grid-template-columns: 1fr;
   }
 
+  .timeline-lead-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .timeline-lead-row .timeline-lead {
+    flex: none;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .juice-menu-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-width: none;
+    padding: 16px 44px 14px 14px;
+    border-radius: 12px;
+  }
+
   .juice-menu-list {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1705,14 +1730,30 @@ footer .fine .gold {
     grid-template-columns: 88px 1fr;
     gap: 14px;
     padding: 12px;
+    min-width: 0;
   }
 
   .juice-drink-visual {
     text-align: center;
   }
 
+  .juice-drink-recipe {
+    min-width: 0;
+  }
+
+  .juice-ingredients li span,
+  .juice-method,
+  .organize-this-message {
+    overflow-wrap: anywhere;
+  }
+
   .drink-glass-mini {
     width: 48px;
+  }
+
+  .brainstorm-detail-card {
+    width: 100%;
+    padding: 16px 44px 14px 14px;
   }
 }
 
@@ -2070,9 +2111,22 @@ footer .fine .gold {
   .timeline-section-sticky {
     position: static;
   }
+
+  .timeline-section-content,
+  .timeline-body {
+    min-width: 0;
+  }
 }
 
 @media (max-width: 600px) {
+  .wrap {
+    padding: 0 18px;
+  }
+
+  .day-section {
+    padding: 72px 0;
+  }
+
   .timeline-item {
     grid-template-columns: 20px 1fr;
     gap: 18px;
@@ -2080,5 +2134,107 @@ footer .fine .gold {
 
   .day-timeline::before {
     left: 9px;
+  }
+
+  .juice-menu-card,
+  .brainstorm-detail-card,
+  .organize-this-card {
+    padding: 16px 40px 14px 14px;
+    border-radius: 12px;
+  }
+
+  .juice-menu-title {
+    font-size: 22px;
+  }
+
+  .juice-menu-sub {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .juice-drink {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px 12px;
+  }
+
+  .juice-drink-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .juice-drink-name {
+    font-size: 14px;
+  }
+
+  .juice-drink-tag {
+    font-size: 11px;
+  }
+
+  .juice-recipe-label {
+    font-size: 10px;
+  }
+
+  .juice-ingredients li {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .ingredient-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .juice-method {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .choice-benefits li {
+    font-size: 12.5px;
+  }
+
+  .brainstorm-detail-title {
+    font-size: 20px;
+  }
+
+  .brainstorm-detail-body {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .brainstorm-detail-note {
+    font-size: 14px;
+  }
+
+  .brainstorm-trigger {
+    font-size: 14px;
+    padding-right: 4px;
+  }
+
+  .organize-this-section {
+    padding: 40px 0 48px;
+  }
+
+  .organize-this-wrap {
+    max-width: none;
+    width: 100%;
+  }
+
+  .organize-this-message {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .organize-this-button {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  footer {
+    padding: 32px 18px;
   }
 }

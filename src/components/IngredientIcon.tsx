@@ -1,6 +1,7 @@
 // Fixed: ingredient icons for green juice, lunch/brunch, breakfast plate, and soup recipes.
 // Fixed: added pea and mint icons for Day 2 green pea soup.
 // Fixed: added baguette, basil, jalapeño, pickle, and wrap icons for Day 3 brunch menu.
+// Recurring bug: hand-written path d strings with chained negatives (e.g. 0-6-3-8) break SVG parse in Chrome.
 
 type IngredientIconProps = {
   name: string;
@@ -293,13 +294,8 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
     case "walnut":
       return (
         <svg {...shared}>
-          <path
-            d="M10 4c-3 2-4 5-3 8 1 2 3 3 5 3 1 5 0 6-2 1-3 0-6-3-8-2-2-5-2-6 0Z"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinejoin="round"
-          />
-          <path d="M10 8v6" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+          <ellipse cx="10" cy="11" rx="5" ry="6.5" stroke="currentColor" strokeWidth="1.4" />
+          <path d="M10 6.5v9" stroke="currentColor" strokeWidth="1" opacity="0.5" />
         </svg>
       );
     case "broccoli":
@@ -315,10 +311,22 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
       return (
         <svg {...shared}>
           <path
-            d="M10 4v2M10 6c-3 1-4 4-3 7 1 2 3 3 5 3 2 3 1 5-1 1-3 0-6-3-7-1-3 0-6 3-7Z"
+            d="M10 4v2"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M7.5 8.5c0-1.8 1.1-3 2.5-3s2.5 1.2 2.5 3v6.5c0 1.5-1.1 2.8-2.5 2.8s-2.5-1.3-2.5-2.8V8.5z"
             stroke="currentColor"
             strokeWidth="1.3"
             strokeLinejoin="round"
+          />
+          <path
+            d="M8 10.5h4M8 12.5h4"
+            stroke="currentColor"
+            strokeWidth="0.9"
+            strokeLinecap="round"
           />
         </svg>
       );
@@ -334,7 +342,7 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
       return (
         <svg {...shared}>
           <path
-            d="M6 12c0-4 2-7 5-8 1 2 2 4 1 6-1 2-3 3-5 2-1-2-1-4 0-6 3-1 5 1 6Z"
+            d="M7,13 C7,9 9.5,6.5 12.5,5.5 C14,8 13.5,10.5 11.5,12.5 C10,13.5 8,13.5 7,13 Z"
             stroke="currentColor"
             strokeWidth="1.4"
             strokeLinejoin="round"
@@ -345,10 +353,22 @@ export function IngredientIcon({ name, className = "" }: IngredientIconProps) {
       return (
         <svg {...shared}>
           <path
-            d="M9 6c0-2 2-3 3-2 1 1 1 3 0 4 1 1 3 0 5-1 2-3 2-5 0-2-1-4 0-5 1-2 0-4 2-4Z"
+            d="M10 5v1.5"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M8 8.5c0-1.7 0.9-3 2-3s2 1.3 2 3v5.5c0 1.3-0.9 2.5-2 2.5s-2-1.2-2-2.5V8.5z"
             stroke="currentColor"
             strokeWidth="1.3"
             strokeLinejoin="round"
+          />
+          <path
+            d="M9 10h2M9 12h2"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            strokeLinecap="round"
           />
         </svg>
       );
