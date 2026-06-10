@@ -10,6 +10,7 @@
    Added: rain-on-water frequency amplification animation with 3D pulse ripples and toggle.
    Fixed: frequency amplification lag — ripples now canvas-rendered; removed DOM pulse layer.
    Fixed: pulse z-index — water canvas z-1, air mask z-2, rain canvas z-3 so black sky covers pulse bleed.
+   Fixed: frequency amplification mobile — stacked control bar stops Encoded Acceleration overlapping toggle.
    Added: enhanced frequency reports — ambient orbs, tier/correlation motion, item hovers (Courtney + Chris).
    Added: Encoded Acceleration page and nav link from frequency amplification.
    Added: encoded-accel intro card 03 — application effect / weekly mastermind widened grid to 56rem.
@@ -4768,12 +4769,29 @@ footer .fine .gold {
   z-index: 3;
 }
 
-.freq-amp-btn {
+.freq-amp-controls {
   position: absolute;
   top: 25%;
-  transform: translateY(-50%);
+  left: 30px;
+  right: 30px;
   z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.freq-amp-controls-dual {
+  justify-content: space-between;
+}
+
+.freq-amp-btn {
+  position: relative;
   display: inline-block;
+  max-width: 100%;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: rgba(255, 255, 255, 0.6);
@@ -4786,14 +4804,19 @@ footer .fine .gold {
   border-radius: 4px;
   transition: all 0.3s ease;
   outline: none;
+  pointer-events: auto;
+  white-space: nowrap;
 }
 
-.freq-amp-btn-left {
-  left: 30px;
+.freq-amp-btn-link {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.freq-amp-btn-right {
-  right: 30px;
+.freq-amp-btn-toggle {
+  flex-shrink: 0;
 }
 
 .freq-amp-btn:hover {
@@ -4805,6 +4828,38 @@ footer .fine .gold {
   border-color: rgba(0, 150, 255, 0.8);
   color: rgba(0, 150, 255, 1);
   box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+}
+
+@media (max-width: 640px) {
+  .freq-amp-controls {
+    top: 12%;
+    left: 12px;
+    right: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+    transform: none;
+  }
+
+  .freq-amp-controls-dual {
+    justify-content: flex-start;
+  }
+
+  .freq-amp-btn {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .freq-amp-btn-link,
+  .freq-amp-btn-toggle {
+    flex-shrink: 1;
+  }
 }
 
 .organize-this-section {

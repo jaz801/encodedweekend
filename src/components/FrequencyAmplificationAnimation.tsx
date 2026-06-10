@@ -6,6 +6,7 @@
 // Added: Encoded Acceleration link on the left when Frequency Amplification is ON.
 // Recurring bug: canvas must size to its container (not window) so surfaceY aligns with the air mask on the amplification page layout.
 // Recurring bug: pulse z-index — water+pulses canvas must sit below air mask (z-2); rain canvas above mask (z-3).
+// Fixed: mobile overlap — controls stack vertically; shorter toggle labels below 640px.
 // Fixed: laggy animations — moved ripples from DOM/CSS to canvas, capped DPR, fewer spring passes, cached gradients, pause when tab hidden.
 
 import Link from "next/link";
@@ -165,6 +166,7 @@ export function FrequencyAmplificationAnimation() {
   const skyCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const [isAmplificationOn, setIsAmplificationOn] = useState(false);
+  const [isCompactControls, setIsCompactControls] = useState(false);
 
   const isAmplificationOnRef = useRef(false);
   const amplificationStartTimeRef = useRef<number | null>(null);
@@ -172,6 +174,14 @@ export function FrequencyAmplificationAnimation() {
   const resetDropletsRef = useRef<(() => void) | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const rainTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const updateCompact = () => setIsCompactControls(media.matches);
+    updateCompact();
+    media.addEventListener("change", updateCompact);
+    return () => media.removeEventListener("change", updateCompact);
+  }, []);
 
   useEffect(() => {
     isAmplificationOnRef.current = isAmplificationOn;
@@ -521,19 +531,29 @@ export function FrequencyAmplificationAnimation() {
       />
       <div className="freq-amp-air-mask" aria-hidden="true" />
       <canvas ref={skyCanvasRef} className="freq-amp-canvas freq-amp-canvas-sky" aria-hidden="true" />
-      {isAmplificationOn ? (
-        <Link href="/encoded-acceleration" className="freq-amp-btn freq-amp-btn-left">
-          Encoded Acceleration
-        </Link>
-      ) : null}
-      <button
-        type="button"
-        id="ampBtn"
-        className={`freq-amp-btn freq-amp-btn-right${isAmplificationOn ? " on" : ""}`}
-        onClick={toggleAmplification}
+      <div
+        className={`freq-amp-controls${isAmplificationOn ? " freq-amp-controls-dual" : ""}`}
       >
-        {isAmplificationOn ? "Frequency Amplification ON" : "Frequency Amplification OFF"}
-      </button>
+        {isAmplificationOn ? (
+          <Link href="/encoded-acceleration" className="freq-amp-btn freq-amp-btn-link">
+            {isCompactControls ? "Acceleration" : "Encoded Acceleration"}
+          </Link>
+        ) : null}
+        <button
+          type="button"
+          id="ampBtn"
+          className={`freq-amp-btn freq-amp-btn-toggle${isAmplificationOn ? " on" : ""}`}
+          onClick={toggleAmplification}
+        >
+          {isAmplificationOn
+            ? isCompactControls
+              ? "Amplification ON"
+              : "Frequency Amplification ON"
+            : isCompactControls
+              ? "Amplification OFF"
+              : "Frequency Amplification OFF"}
+        </button>
+      </div>
     </div>
   );
 }
