@@ -3,6 +3,7 @@
 // Chris Walker — Week 4 accelerator frequency pro report data.
 // Fixed: ENTJ-optimised activities — podcast, gym, meditation, reflection, strategy, LinkedIn, events, family/friends, reading.
 // Fixed: week timeline + peak stats aligned to ENTJ pattern — less T4 than ENFP, Wed events crash, Sat podcast peak.
+// Fixed: removed heroSubtitle copy per request — ENTJ strategy/LinkedIn/events summary no longer shown under report header.
 
 import {
   BreathIcon,
@@ -667,8 +668,7 @@ export const chrisWalkerReport: FrequencyReportData = {
   reportRange: REPORT_RANGE,
   introJournalEntries: "6 / 7 days",
   introDataPoints: "1,186",
-  heroSubtitle:
-    "ENTJ frequency pro report — strategy, execution, and field leadership drive Chris's band. Chain LinkedIn and podcast after reflection; events lift when paced, but overload Wed pulled the week into T2.",
+  heroSubtitle: "",
   bandwidthSummary: "Accessible range Tier 2 → 4 · avg logged tier 2.7 · less T4 hold than ENFP peers",
   hrvWeek: HRV_WEEK,
   sleepWeek: SLEEP_WEEK,

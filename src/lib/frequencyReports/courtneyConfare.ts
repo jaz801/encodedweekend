@@ -3,6 +3,7 @@
 // Courtney Confare — Week 4 accelerator frequency pro report data.
 // Fixed: ENFP-optimised activities — Instagram, design management, course building, exercise, reflection, friends/family.
 // Fixed: ENFP narrative — creative lifts/drops, reflection anchors scatter, comparison + isolation traps.
+// Fixed: removed heroSubtitle copy per request — ENFP creative/Instagram summary no longer shown under report header.
 
 import {
   BreathIcon,
@@ -619,8 +620,7 @@ export const courtneyConfareReport: FrequencyReportData = {
   reportRange: REPORT_RANGE,
   introJournalEntries: "7 / 7 days",
   introDataPoints: "1,248",
-  heroSubtitle:
-    "ENFP frequency pro report — creative output, people energy, and reflection drive Courtney's band. Batch Instagram and course work after morning reflection; draining meetings are not the same as friends and family.",
+  heroSubtitle: "",
   bandwidthSummary: "Accessible range Tier 3 → 4 · avg logged tier 3.1",
   hrvWeek: HRV_WEEK,
   sleepWeek: SLEEP_WEEK,

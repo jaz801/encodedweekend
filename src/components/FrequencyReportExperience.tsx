@@ -3,6 +3,7 @@
 // Added: full accelerator frequency report — Apple Watch metrics × frequency training (brand guide).
 // Fixed: Courtney Confare report — HRV band, activity insights, diary chart, Wim Hof experiment.
 // Fixed: removed Jasper mission and ENTP build notes from all frequency reports.
+// Fixed: hide hero subtitle when empty — Chris Walker report no longer shows header summary paragraph.
 // Fixed: hero eyebrow reads "Frequency pro report" (product name).
 // Added: dense data layer — summary stats, watch dashboard, daily table, workout log, correlations.
 // Fixed: metrics use Tabler Icons (@tabler/icons-react) for polished icon set.
@@ -88,7 +89,9 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
             </p>
           </div>
         </div>
-        <p className="freq-report-subtitle">{report.heroSubtitle}</p>
+        {report.heroSubtitle ? (
+          <p className="freq-report-subtitle">{report.heroSubtitle}</p>
+        ) : null}
       </header>
 
       <Reveal as="section" className="freq-report-section" id="bandwidth">
