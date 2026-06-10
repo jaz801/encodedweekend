@@ -2,6 +2,7 @@
 
 // What the accelerator does — top performers, sync sources, experiments → ENCODED model.
 // Fixed: cohort invite + Oura/Apple Watch sync; activity scheduling window (week vs month).
+// Added: card 03 — application effect; weekly mastermind improves product and frequency measurement together.
 
 export function EncodedAccelerationIntro() {
   return (
@@ -54,6 +55,30 @@ export function EncodedAccelerationIntro() {
             <div>
               <dt>ENCODED model</dt>
               <dd>v0.4 beta</dd>
+            </div>
+          </dl>
+        </article>
+        <article className="freq-report-intro-card">
+          <span className="freq-report-intro-num">03</span>
+          <h3>Application effect · mastermind</h3>
+          <p>
+            Every week the cohort meets to improve ENCODED in real use — and at the same time to
+            improve how they measure and shift frequency. Wisdom of the crowd compounds: shared
+            protocols, sharper reads, and product changes that only show up when a group trains
+            together. It works like a mastermind.
+          </p>
+          <dl className="freq-report-intro-data">
+            <div>
+              <dt>Meet cadence</dt>
+              <dd>Weekly</dd>
+            </div>
+            <div>
+              <dt>Dual outcome</dt>
+              <dd>Product + frequency</dd>
+            </div>
+            <div>
+              <dt>Group dynamic</dt>
+              <dd>Wisdom of the crowd</dd>
             </div>
           </dl>
         </article>

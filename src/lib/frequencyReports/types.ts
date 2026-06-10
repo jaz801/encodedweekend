@@ -97,6 +97,19 @@ export type PureTierStat = {
   stateNote: string;
 };
 
+export type SleepStage = {
+  label: string;
+  pct: number;
+  color: string;
+};
+
+export type HrvActivityInsight = {
+  label: string;
+  detail: string;
+  note: string;
+  color: string;
+};
+
 export type FrequencyReportData = {
   memberName: string;
   memberFirstName: string;
@@ -123,6 +136,8 @@ export type FrequencyReportData = {
     score: number;
     efficiency: string;
   };
+  sleepStages?: readonly SleepStage[];
+  hrvActivityInsights?: readonly HrvActivityInsight[];
   watchDashboard: readonly WatchDashboardItem[];
   weekFrequency: readonly WeekFrequencyDay[];
   activityCeilings: readonly ActivityCeiling[];

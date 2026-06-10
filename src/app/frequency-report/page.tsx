@@ -1,6 +1,8 @@
 // Added: Courtney Confare ENFP frequency pro report — linked from Encoded Acceleration step 04.
+// Added: enhanced report profile — ambient orbs, diary/tier animations, item hovers.
 
 import type { Metadata } from "next";
+import { FrequencyReportAmbient } from "@/components/FrequencyReportAmbient";
 import { FrequencyReportExperience } from "@/components/FrequencyReportExperience";
 import { courtneyConfareReport } from "@/lib/frequencyReports/courtneyConfare";
 import { Footer } from "@/components/Footer";
@@ -16,8 +18,12 @@ export default function FrequencyReportPage() {
   return (
     <div className="amplification-page">
       <Nav />
-      <main className="frequency-report-main" aria-label="Courtney Confare frequency pro report">
-        <FrequencyReportExperience report={courtneyConfareReport} />
+      <main
+        className="frequency-report-main frequency-report-main-enhanced"
+        aria-label="Courtney Confare frequency pro report"
+      >
+        <FrequencyReportAmbient />
+        <FrequencyReportExperience report={courtneyConfareReport} animationProfile="enhanced" />
       </main>
       <Footer />
     </div>

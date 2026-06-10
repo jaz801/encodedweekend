@@ -17,14 +17,23 @@
 // Added: per-day tier hours + frequency jumps in week access; activities use HR/duration/energy only.
 // Added: colorful tier-time chart (replaces plain hours table in bandwidth section).
 // Added: member-specific report data — Courtney Confare and Chris Walker share this layout.
+// Added: enhanced animation profile — diary chart, tier/correlation motion, ambient orbs, hovers.
+// Fixed: removed intro metrics strip and biometric pulse (HRV/sleep) panels per request.
+// Fixed: Apple Watch dashboard below Reality transformation; Chris Walker uses same enhanced profile.
+// Fixed: Apple Watch & Oura Ring dashboard moved below Reality transformation section.
 // Added: optional member archetype badge (ENFP) and activity focus in activities section.
 // Fixed: "Before your report" intro moved to encoded acceleration page.
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { ActivitiesFrequencySection } from "@/components/ActivitiesFrequencySection";
-import { StaggerGrid } from "@/components/FrequencyReportMotion";
+import { FrequencyDiaryChart } from "@/components/FrequencyDiaryChart";
+import {
+  BandwidthTierTrack,
+  CorrelationTableBody,
+  StaggerGrid,
+} from "@/components/FrequencyReportMotion";
 import { Reveal } from "@/components/Reveal";
 import { FrequencyTierTimeChart } from "@/components/FrequencyTierTimeChart";
 import { FrequencyWeekTimeline } from "@/components/FrequencyWeekTimeline";
@@ -48,9 +57,14 @@ const WIM_HOF_VIDEO = "https://www.youtube.com/embed/tybOi4hjZFQ";
 
 type FrequencyReportExperienceProps = {
   report: FrequencyReportData;
+  animationProfile?: "enhanced";
 };
 
-export function FrequencyReportExperience({ report }: FrequencyReportExperienceProps) {
+export function FrequencyReportExperience({
+  report,
+  animationProfile,
+}: FrequencyReportExperienceProps) {
+  const isEnhancedProfile = animationProfile === "enhanced";
   const weekFrequencyEnriched = useMemo(
     () =>
       report.weekFrequency.map((day) => ({
@@ -62,8 +76,19 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
     [report.weekFrequency],
   );
 
+  const diaryDays = useMemo(
+    () =>
+      report.weekFrequency.map((day) => ({
+        day: day.day,
+        tier: day.peakTier,
+        label: day.access,
+        hrv: day.hrv,
+      })),
+    [report.weekFrequency],
+  );
+
   return (
-    <div className="freq-report">
+    <div className={`freq-report${isEnhancedProfile ? " freq-report-enhanced" : ""}`}>
       <header className="freq-report-hero freq-report-hero-enter">
         <div className="freq-report-member">
           <div className="freq-report-member-photo-wrap freq-report-photo-ring">
@@ -82,7 +107,11 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
             <p className="freq-report-cycle">
               {report.memberArchetype ? (
                 <>
-                  <span className="freq-report-archetype">{report.memberArchetype}</span>{" "}
+                  <span
+                    className={`freq-report-archetype${isEnhancedProfile ? " freq-report-archetype-glow" : ""}`}
+                  >
+                    {report.memberArchetype}
+                  </span>{" "}
                 </>
               ) : null}
               {report.reportCycle} · {report.reportRange}
@@ -103,22 +132,26 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
             <p>{report.bandwidthSummary} · {report.reportRange}</p>
           </div>
         </div>
-        <div className="freq-report-bandwidth-track">
-          {report.frequencyTiers.map((item) => (
-            <div
-              key={item.tier}
-              className={`freq-report-tier${item.active ? " freq-report-tier-active" : ""}`}
-            >
-              <span className="freq-report-tier-num">T{item.tier}</span>
-              <span className="freq-report-tier-name">{item.name}</span>
-              <span className="freq-report-tier-pct">
-                {report.tierTime.find((t) => t.tier === item.tier)?.pct ?? 0}% ·{" "}
-                {report.tierTime.find((t) => t.tier === item.tier)?.hours ?? "0h"}
-              </span>
-            </div>
-          ))}
-          <div className="freq-report-bandwidth-glow" aria-hidden="true" />
-        </div>
+        {isEnhancedProfile ? (
+          <BandwidthTierTrack tiers={report.frequencyTiers} tierTime={report.tierTime} />
+        ) : (
+          <div className="freq-report-bandwidth-track">
+            {report.frequencyTiers.map((item) => (
+              <div
+                key={item.tier}
+                className={`freq-report-tier${item.active ? " freq-report-tier-active" : ""}`}
+              >
+                <span className="freq-report-tier-num">T{item.tier}</span>
+                <span className="freq-report-tier-name">{item.name}</span>
+                <span className="freq-report-tier-pct">
+                  {report.tierTime.find((t) => t.tier === item.tier)?.pct ?? 0}% ·{" "}
+                  {report.tierTime.find((t) => t.tier === item.tier)?.hours ?? "0h"}
+                </span>
+              </div>
+            ))}
+            <div className="freq-report-bandwidth-glow" aria-hidden="true" />
+          </div>
+        )}
 
         <div className="freq-report-tier-time-panel">
           <h3>Time in each frequency · {report.weekTotalHours}h week</h3>
@@ -248,24 +281,98 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
                 <th>Outcome</th>
               </tr>
             </thead>
-            <tbody>
-              {report.biometricCorrelations.map((row) => (
-                <tr key={row.indicator}>
-                  <td>{row.indicator}</td>
-                  <td>{row.biometric}</td>
-                  <td>
-                    <span className={`freq-report-corr-level freq-report-corr-level-${row.level.toLowerCase()}`}>
-                      {row.level}
-                    </span>
-                  </td>
-                  <td>{row.r}</td>
-                  <td>{row.frequencyLink}</td>
-                  <td>{row.outcome}</td>
-                </tr>
-              ))}
-            </tbody>
+            {isEnhancedProfile ? (
+              <CorrelationTableBody>
+                {report.biometricCorrelations.map((row, index) => (
+                  <tr
+                    key={row.indicator}
+                    className="freq-report-correlation-row"
+                    style={{ "--row-delay": `${index * 0.05}s` } as CSSProperties}
+                  >
+                    <td>{row.indicator}</td>
+                    <td>{row.biometric}</td>
+                    <td>
+                      <span
+                        className={`freq-report-corr-level freq-report-corr-level-${row.level.toLowerCase()}`}
+                      >
+                        {row.level}
+                      </span>
+                    </td>
+                    <td>{row.r}</td>
+                    <td>{row.frequencyLink}</td>
+                    <td>{row.outcome}</td>
+                  </tr>
+                ))}
+              </CorrelationTableBody>
+            ) : (
+              <tbody>
+                {report.biometricCorrelations.map((row) => (
+                  <tr key={row.indicator}>
+                    <td>{row.indicator}</td>
+                    <td>{row.biometric}</td>
+                    <td>
+                      <span
+                        className={`freq-report-corr-level freq-report-corr-level-${row.level.toLowerCase()}`}
+                      >
+                        {row.level}
+                      </span>
+                    </td>
+                    <td>{row.r}</td>
+                    <td>{row.frequencyLink}</td>
+                    <td>{row.outcome}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="freq-report-section" id="reality-transform">
+        <div aria-labelledby="reality-heading">
+        <div className="freq-report-section-head">
+          <MeditationIcon className="freq-report-section-icon" />
+          <div>
+            <h2 id="reality-heading">Reality transformation</h2>
+            <p>
+              Diary score <strong>{report.realityDiaryScore}</strong> · peak day{" "}
+              <strong>{report.realityPeakScore}</strong> ({report.realityPeakDay})
+            </p>
+          </div>
+        </div>
+        {isEnhancedProfile ? (
+          <div className="freq-report-diary-panel">
+            <h3>Peak tier movement · 7 days</h3>
+            <p className="freq-report-diary-panel-lead">
+              Daily peak frequency from journal — HRV logged alongside each day.
+            </p>
+            <FrequencyDiaryChart days={diaryDays} />
+          </div>
+        ) : null}
+
+        <StaggerGrid className="freq-report-reality-scale">
+          {report.realityLevels.map((item) => (
+            <div
+              key={item.level}
+              className={`freq-report-reality-step${item.active ? " freq-report-reality-step-active freq-report-reality-pulse" : ""}`}
+            >
+              <span className="freq-report-reality-level">{item.level}</span>
+              <span className="freq-report-reality-score">{item.score}</span>
+              <p>{item.desc}</p>
+              {item.manifestations.length > 0 ? (
+                <div className="freq-report-reality-manifestations">
+                  <span className="freq-report-reality-manifestations-label">Manifestations logged</span>
+                  <ul>
+                    {item.manifestations.map((m) => (
+                      <li key={m}>{m}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </StaggerGrid>
         </div>
       </Reveal>
 
@@ -290,43 +397,6 @@ export function FrequencyReportExperience({ report }: FrequencyReportExperienceP
               </article>
             );
           })}
-        </StaggerGrid>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="freq-report-section" id="reality-transform">
-        <div aria-labelledby="reality-heading">
-        <div className="freq-report-section-head">
-          <MeditationIcon className="freq-report-section-icon" />
-          <div>
-            <h2 id="reality-heading">Reality transformation</h2>
-            <p>
-              Diary score <strong>{report.realityDiaryScore}</strong> · peak day{" "}
-              <strong>{report.realityPeakScore}</strong> ({report.realityPeakDay})
-            </p>
-          </div>
-        </div>
-        <StaggerGrid className="freq-report-reality-scale">
-          {report.realityLevels.map((item) => (
-            <div
-              key={item.level}
-              className={`freq-report-reality-step${item.active ? " freq-report-reality-step-active freq-report-reality-pulse" : ""}`}
-            >
-              <span className="freq-report-reality-level">{item.level}</span>
-              <span className="freq-report-reality-score">{item.score}</span>
-              <p>{item.desc}</p>
-              {item.manifestations.length > 0 ? (
-                <div className="freq-report-reality-manifestations">
-                  <span className="freq-report-reality-manifestations-label">Manifestations logged</span>
-                  <ul>
-                    {item.manifestations.map((m) => (
-                      <li key={m}>{m}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          ))}
         </StaggerGrid>
         </div>
       </Reveal>

@@ -4,6 +4,7 @@
 // Fixed: ENFP-optimised activities — Instagram, design management, course building, exercise, reflection, friends/family.
 // Fixed: ENFP narrative — creative lifts/drops, reflection anchors scatter, comparison + isolation traps.
 // Fixed: removed heroSubtitle copy per request — ENFP creative/Instagram summary no longer shown under report header.
+// Fixed: removed sleep stages + HRV activity insights from report UI — data kept optional on type only.
 
 import {
   BreathIcon,

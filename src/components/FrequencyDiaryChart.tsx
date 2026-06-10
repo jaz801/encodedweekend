@@ -2,6 +2,16 @@
 
 // 7-day frequency tier chart from accelerator diary entries.
 // Added: staggered bar grow animation when chart scrolls into view.
+// Added: tier-colored bars — peak tier per day maps to frequency palette.
+
+const TIER_BAR_COLORS: Record<number, string> = {
+  1: "#2e2e2e",
+  2: "#6b8cae",
+  3: "#c4a46c",
+  4: "#e6ba4a",
+  5: "#8ec0ff",
+  6: "#eeeeee",
+};
 
 import type { CSSProperties } from "react";
 import { useInView } from "@/hooks/useInView";
@@ -47,7 +57,12 @@ export function FrequencyDiaryChart({ days }: FrequencyDiaryChartProps) {
               <div className="freq-report-diary-bar-wrap">
                 <div
                   className="freq-report-diary-bar"
-                  style={{ "--bar-height": `${heightPct}%` } as CSSProperties}
+                  style={
+                    {
+                      "--bar-height": `${heightPct}%`,
+                      "--bar-color": TIER_BAR_COLORS[entry.tier] ?? "#e6ba4a",
+                    } as CSSProperties
+                  }
                   title={`${entry.day}: Tier ${entry.tier}`}
                 />
               </div>

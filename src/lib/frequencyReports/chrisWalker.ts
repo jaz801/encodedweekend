@@ -3,6 +3,7 @@
 // Chris Walker — Week 4 accelerator frequency pro report data.
 // Fixed: ENTJ-optimised activities — podcast, gym, meditation, reflection, strategy, LinkedIn, events, family/friends, reading.
 // Fixed: week timeline + peak stats aligned to ENTJ pattern — less T4 than ENFP, Wed events crash, Sat podcast peak.
+// Added: enhanced report profile — same animations, hovers, and section order as Courtney report.
 // Fixed: removed heroSubtitle copy per request — ENTJ strategy/LinkedIn/events summary no longer shown under report header.
 
 import {
