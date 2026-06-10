@@ -20,6 +20,10 @@
 # production
 /build
 
+# Large 3D source files (GitHub rejects files over 100MB)
+public/fbx file/
+public/maya/maya file.mb
+
 # misc
 .DS_Store
 *.pem

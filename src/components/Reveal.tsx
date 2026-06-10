@@ -1,5 +1,7 @@
 "use client";
 
+// Added: aria-labelledby / aria-label passthrough for section reveals (frequency report intro).
+
 import { useEffect, useRef } from "react";
 
 type RevealProps = {
@@ -7,6 +9,8 @@ type RevealProps = {
   className?: string;
   as?: "div" | "section";
   id?: string;
+  "aria-labelledby"?: string;
+  "aria-label"?: string;
 };
 
 export function Reveal({
@@ -14,6 +18,8 @@ export function Reveal({
   className = "",
   as: Component = "div",
   id,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -42,6 +48,8 @@ export function Reveal({
     <Component
       ref={ref as never}
       id={id}
+      aria-labelledby={ariaLabelledBy}
+      aria-label={ariaLabel}
       className={`reveal ${className}`.trim()}
     >
       {children}
