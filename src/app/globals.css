@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/devices-watch.css";
 
 /* Fixed: expandable timeline choice cards felt too small on wide desktop monitors.
    1440px+ spans full timeline section; 1920px+ widens layout, bleeds to wrap edges, scales up again.
@@ -11,8 +12,22 @@
    Fixed: frequency amplification lag — ripples now canvas-rendered; removed DOM pulse layer.
    Fixed: pulse z-index — water canvas z-1, air mask z-2, rain canvas z-3 so black sky covers pulse bleed.
    Fixed: frequency amplification mobile — stacked control bar stops Encoded Acceleration overlapping toggle.
-   Added: enhanced frequency reports — ambient orbs, tier/correlation motion, item hovers (Courtney + Chris).
-   Added: Encoded Acceleration page and nav link from frequency amplification.
+   Fixed: GPS side panel card wider so connect copy stretches horizontally.
+   Fixed: encoded Apple Watch app — mobile + tablet portrait scale, stacked panels, and overflow.
+   Fixed: Build Plan card overlays watch on page (black website card), not inside watch screen.
+   Fixed: Build Plan button moved to bottom bar — Frequency Signals page only, same style as panel switcher.
+   Fixed: Build Plan collaboration invite is full-screen with large typography.
+   Fixed: watch app page — hero, panel tabs, correct labels, Build Plan hint, Signals copy + phase 2 label.
+   Fixed: nav — wave logo + ENCODED wordmark left; watch prototypes in premium demo frame.
+   Fixed: watch app — tablet + mobile responsive pass (hero, tabs, demo frame, scale, side panels, bar).
+   Fixed: hero spacing — more black space between title and three panel tabs.
+   Fixed: compact panel tabs in sub-nav under site nav; hero title no longer overlapped.
+   Fixed: frequency logging side panel visible on page load (always show tier guide lines).
+   Added: Encoded Apple Watch App page.
+   Fixed: removed Apple Watch page hero copy, navigation buttons, and feature cards.
+   Added: Devices.css Apple Watch Ultra prototype centered on encoded-apple-watch-app page.
+   Added: third watch prototype — Frequency Signals carousel panel + cycling nav button labels.
+   Fixed: frequency line visibly vibrates with dash pulse and wave distortion.
    Added: encoded-accel intro card 03 — application effect / weekly mastermind widened grid to 56rem.
    Removed: Encoded Acceleration stick figure animation.
    Added: Encoded Acceleration Three.js white glass figure with OrbitControls.
@@ -146,6 +161,33 @@ nav {
   align-items: center;
 }
 
+.brand-link {
+  gap: 0.65rem;
+  color: var(--white);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.brand-link:hover {
+  opacity: 0.88;
+}
+
+.encoded-logo-nav-icon {
+  height: 24px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.brand-wordmark {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 3.2px;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1;
+}
+
 .encoded-logo {
   display: block;
   height: 22px;
@@ -204,6 +246,19 @@ nav {
 @media (max-width: 900px) {
   .nav-links {
     display: none;
+  }
+
+  nav {
+    padding: 16px 22px;
+  }
+
+  .brand-wordmark {
+    font-size: 13px;
+    letter-spacing: 2.6px;
+  }
+
+  .encoded-logo-nav-icon {
+    height: 22px;
   }
 }
 
@@ -744,6 +799,4058 @@ footer .fine .gold {
   flex: 1;
   background: #000000;
   overflow: visible;
+}
+
+.encoded-watch-app-main {
+  --encoded-watch-scale: clamp(0.82, 0.22vw + 0.78, 1.12);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: calc(100vh - 58px - 180px);
+  min-height: calc(100svh - 58px - 180px);
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(230, 186, 74, 0.09) 0%, transparent 58%),
+    radial-gradient(ellipse 60% 40% at 100% 40%, rgba(100, 160, 255, 0.04) 0%, transparent 55%),
+    #000000;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.encoded-watch-app-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.encoded-watch-app-hero {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 5vw, 2.75rem) clamp(1.25rem, 4vw, 2rem) clamp(0.85rem, 2vw, 1.25rem);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.encoded-watch-app-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.55rem clamp(1rem, 3vw, 2.5rem) 0.65rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.encoded-watch-app-hero-title {
+  margin: 0 0 clamp(0.85rem, 2vw, 1.15rem);
+  position: relative;
+  z-index: 1;
+  font-family: var(--display);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  text-wrap: balance;
+}
+
+.encoded-watch-app-hero-lead {
+  margin: 0 auto clamp(1.25rem, 3vw, 1.75rem);
+  max-width: 36rem;
+  font-family: var(--sans);
+  font-size: clamp(0.95rem, 2.3vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.58;
+  color: rgba(255, 255, 255, 0.64);
+  text-wrap: balance;
+}
+
+.encoded-watch-app-panel-tab {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.32rem 0.62rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.68);
+  font-family: var(--sans);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.encoded-watch-app-panel-tab:hover {
+  border-color: rgba(196, 164, 108, 0.38);
+  color: var(--white);
+}
+
+.encoded-watch-app-panel-tab.is-active {
+  border-color: rgba(230, 186, 74, 0.5);
+  background: rgba(230, 186, 74, 0.12);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.encoded-watch-app-panel-tab-num {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+.encoded-watch-app-panel-tab-label {
+  font-size: clamp(0.58rem, 1.4vw, 0.68rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
+.encoded-watch-app-hero-panel-blurb {
+  margin: 0 auto;
+  max-width: 38rem;
+  padding: 0.65rem 0.95rem;
+  border-left: 2px solid rgba(230, 186, 74, 0.45);
+  font-family: var(--sans);
+  font-size: clamp(0.84rem, 2vw, 0.96rem);
+  font-weight: 500;
+  line-height: 1.52;
+  color: rgba(255, 255, 255, 0.58);
+  text-align: left;
+}
+
+.encoded-watch-app-build-plan-hint {
+  margin: clamp(0.95rem, 2.5vw, 1.25rem) auto 0;
+  max-width: 38rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid rgba(230, 186, 74, 0.22);
+  border-radius: 999px;
+  background: rgba(230, 186, 74, 0.06);
+  font-family: var(--sans);
+  font-size: clamp(0.78rem, 1.9vw, 0.88rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.encoded-watch-app-build-plan-hint-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold-cta);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.encoded-watch-app-build-plan-hint-link:hover {
+  color: #ffffff;
+}
+
+.encoded-watch-app-demo {
+  position: relative;
+  width: 100%;
+  padding: clamp(1rem, 3vw, 1.75rem) clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1rem);
+}
+
+.encoded-watch-app-demo-glow {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: min(720px, 90vw);
+  height: min(420px, 55vh);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 186, 74, 0.1) 0%, transparent 68%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.encoded-watch-app-demo-frame {
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(1.15rem, 2.5vw, 1.75rem) clamp(1rem, 2.5vw, 1.5rem) clamp(1.25rem, 2.5vw, 1.85rem);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.012) 42%, rgba(0, 0, 0, 0.2) 100%);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.encoded-watch-app-demo-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+  padding-bottom: clamp(0.75rem, 2vw, 1rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.encoded-watch-app-demo-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.encoded-watch-app-demo-title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--white);
+}
+
+.encoded-watch-app {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+}
+
+.encoded-watch-app-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  padding-inline: clamp(0rem, 1vw, 0.5rem);
+}
+
+.encoded-watch-app-carousel-track {
+  display: flex;
+  width: 300%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.82s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.encoded-watch-app-panel {
+  flex: 0 0 calc(100% / 3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding-inline: clamp(0.35rem, 2vw, 0.75rem);
+  box-sizing: border-box;
+}
+
+.encoded-watch-gps-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1.5rem, 4vw, 3rem) clamp(1.35rem, 2.5vw, 2rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+}
+
+.encoded-watch-gps-bar--with-build-plan {
+  justify-content: center;
+  gap: clamp(0.65rem, 2vw, 1rem);
+  flex-wrap: wrap;
+}
+
+.encoded-watch-gps-bar--with-build-plan .encoded-watch-gps-activity-btn[aria-expanded="true"] {
+  border-color: rgba(230, 186, 74, 0.55);
+  color: #ffffff;
+}
+
+.encoded-watch-gps-activity-btn {
+  padding: 1rem 2.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.94);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.encoded-watch-gps-activity-btn:hover {
+  border-color: rgba(230, 186, 74, 0.45);
+  background: rgba(28, 28, 28, 0.96);
+  transform: translateY(-1px);
+}
+
+.encoded-watch-gps-activity-btn[aria-pressed="true"] {
+  border-color: rgba(120, 200, 255, 0.5);
+  color: #ffffff;
+}
+
+.encoded-watch-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.encoded-watch-prototype-scale {
+  --watch-device-w: 360px;
+  --watch-device-h: 380px;
+  transform: scale(var(--encoded-watch-scale));
+  transform-origin: center center;
+  flex-shrink: 0;
+  width: var(--watch-device-w);
+  max-width: min(var(--watch-device-w), calc(100vw - 2.5rem));
+  margin-bottom: calc(var(--watch-device-h) * (var(--encoded-watch-scale) - 1));
+}
+
+.encoded-watch-build-plan-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.encoded-watch-build-plan-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  background: #000000;
+  cursor: pointer;
+  animation: encoded-watch-build-plan-backdrop-in 0.35s ease forwards;
+}
+
+.encoded-watch-build-plan-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  padding: clamp(5rem, 12vh, 7rem) clamp(1.5rem, 6vw, 5rem) clamp(2.5rem, 8vh, 4rem);
+  border: 0;
+  border-radius: 0;
+  background: #000000;
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow: none;
+  animation: encoded-watch-build-plan-overlay-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-build-plan-close {
+  position: fixed;
+  top: clamp(1.1rem, 3vw, 1.75rem);
+  right: clamp(1.1rem, 3vw, 1.75rem);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2.5rem, 6vw, 3.25rem);
+  height: clamp(2.5rem, 6vw, 3.25rem);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.encoded-watch-build-plan-close:hover {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.encoded-watch-build-plan-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0;
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(230, 186, 74, 0.35) transparent;
+}
+
+.encoded-watch-build-plan-inner {
+  width: 100%;
+  max-width: min(52rem, 100%);
+  margin: 0 auto;
+}
+
+.encoded-watch-build-plan-lead {
+  margin: 0 0 clamp(0.85rem, 2vw, 1.25rem);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.encoded-watch-build-plan-quote {
+  margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.1rem, 3vw, 1.75rem);
+  border-left: 4px solid var(--gold-cta);
+  border-radius: 0 12px 12px 0;
+  background: rgba(230, 186, 74, 0.08);
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 5.5vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--gold-cta);
+}
+
+.encoded-watch-build-plan-body {
+  margin: 0 0 clamp(1rem, 2.5vw, 1.65rem);
+  font-family: var(--sans);
+  font-size: clamp(1.05rem, 2.8vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.encoded-watch-build-plan-cta-label {
+  margin: clamp(0.75rem, 2vw, 1.5rem) 0 clamp(0.85rem, 2vw, 1.15rem);
+  font-family: var(--mono);
+  font-size: clamp(0.78rem, 1.8vw, 1rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.encoded-watch-build-plan-link {
+  display: inline-block;
+  padding: clamp(0.85rem, 2vw, 1.1rem) clamp(1.25rem, 3vw, 1.85rem);
+  border: 1px solid rgba(230, 186, 74, 0.45);
+  border-radius: 999px;
+  background: var(--gold-cta);
+  color: #111111;
+  font-family: var(--sans);
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.encoded-watch-build-plan-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(230, 186, 74, 0.32);
+}
+
+@keyframes encoded-watch-build-plan-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-build-plan-overlay-in {
+  0% {
+    opacity: 0;
+    transform: translateY(2%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.encoded-watch-screen {
+  cursor: none;
+  touch-action: none;
+  overflow: hidden;
+  background: #000000;
+}
+
+.encoded-watch-screen-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.encoded-watch-double-tap {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 14;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+}
+
+.encoded-watch-double-tap--first {
+  animation: encoded-watch-double-tap 0.9s ease-out forwards;
+}
+
+.encoded-watch-double-tap--second {
+  animation: encoded-watch-double-tap 0.9s ease-out 0.34s forwards;
+  opacity: 0;
+}
+
+@keyframes encoded-watch-double-tap {
+  0% {
+    opacity: 1;
+    transform: scale(0.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+/* Clock face */
+.encoded-watch-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 0.85rem;
+  background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.08), transparent 58%), #000000;
+}
+
+.encoded-watch-clock-face {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.14);
+  background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 72%);
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.04);
+}
+
+.encoded-watch-clock-tick {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 2px;
+  height: 10px;
+  margin-left: -1px;
+  transform-origin: 50% 74px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 2px;
+}
+
+.encoded-watch-clock-hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 999px;
+}
+
+.encoded-watch-clock-hand-hour {
+  width: 5px;
+  height: 46px;
+  margin-left: -2.5px;
+  background: #ffffff;
+}
+
+.encoded-watch-clock-hand-minute {
+  width: 3px;
+  height: 62px;
+  margin-left: -1.5px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.encoded-watch-clock-hand-second {
+  width: 2px;
+  height: 68px;
+  margin-left: -1px;
+  background: #ff453a;
+}
+
+.encoded-watch-clock-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #ffffff;
+  z-index: 2;
+}
+
+.encoded-watch-clock-digital {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.encoded-watch-clock--wallpaper {
+  position: relative;
+  z-index: 2;
+  gap: 0.75rem;
+  background: transparent;
+}
+
+.encoded-watch-clock--wallpaper .encoded-watch-clock-face {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.28) 72%);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.encoded-watch-clock--wallpaper .encoded-watch-clock-tick {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.encoded-watch-clock--wallpaper .encoded-watch-clock-digital {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.encoded-watch-clock--wallpaper .encoded-watch-clock-hand-hour,
+.encoded-watch-clock--wallpaper .encoded-watch-clock-hand-minute,
+.encoded-watch-clock--wallpaper .encoded-watch-clock-hand-second {
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+
+.encoded-watch-clock--photo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.15rem;
+  z-index: 8;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  background: transparent;
+}
+
+.encoded-watch-clock-digital--photo {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.65),
+    0 0 24px rgba(0, 0, 0, 0.35);
+}
+
+.encoded-watch-gps-screen {
+  position: relative;
+  overflow: hidden;
+  background: #0b1a2a;
+  cursor: default;
+}
+
+.encoded-watch-gps-wallpaper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 85% 65% at 22% 18%, rgba(95, 185, 255, 0.9) 0%, transparent 58%),
+    radial-gradient(ellipse 75% 58% at 78% 82%, rgba(168, 92, 220, 0.82) 0%, transparent 54%),
+    radial-gradient(ellipse 120% 90% at 50% 52%, #1d4f7a 0%, #0a1c30 62%, #061018 100%);
+}
+
+.encoded-watch-gps-screen--interactive {
+  cursor: none;
+}
+
+.encoded-watch-touchpoint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 13;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}
+
+.encoded-watch-touchpoint--first {
+  animation: encoded-watch-touchpoint-pulse 1.4s ease-in-out infinite;
+}
+
+.encoded-watch-touchpoint--second {
+  animation: encoded-watch-touchpoint-pulse 1.4s ease-in-out 0.22s infinite;
+}
+
+@keyframes encoded-watch-touchpoint-pulse {
+  0%,
+  100% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.encoded-watch-gps-create {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 1.1rem 1rem 1.25rem;
+  text-align: center;
+  background: #000000;
+  z-index: 3;
+  animation: encoded-watch-logged-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-gps-create-eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.encoded-watch-gps-create-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.encoded-watch-gps-create-subtitle {
+  margin: 0 0 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.encoded-watch-gps-create-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  width: calc(100% - 0.5rem);
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.encoded-watch-gps-create-field:hover {
+  border-color: rgba(120, 200, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.encoded-watch-gps-create-field-label {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.encoded-watch-gps-create-field-value {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.92);
+  word-break: break-word;
+}
+
+.encoded-watch-gps-create-field-value.is-placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.encoded-watch-gps-keyboard {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 26%) minmax(0, 74%);
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  z-index: 5;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: encoded-watch-logged-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-gps-keyboard-spacer {
+  min-height: 0;
+}
+
+.encoded-watch-gps-keyboard-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.34rem 0.38rem 0.82rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(8, 8, 8, 0.98) 0%, #000000 100%);
+  box-sizing: border-box;
+}
+
+.encoded-watch-gps-keyboard-header {
+  flex-shrink: 0;
+  width: 100%;
+  margin-bottom: 0.22rem;
+}
+
+.encoded-watch-gps-keyboard-preview {
+  margin: 0;
+  padding: 0.32rem 0.42rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.07);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.encoded-watch-gps-keyboard-keys {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 0.18rem;
+  min-height: 0;
+  width: 100%;
+}
+
+.encoded-watch-gps-keyboard-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  justify-content: stretch;
+  gap: 0.18rem;
+  width: 100%;
+  min-height: 0;
+}
+
+.encoded-watch-gps-keyboard--panel-open .encoded-watch-gps-keyboard-grid {
+  overflow: hidden;
+}
+
+.encoded-watch-gps-keyboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0 0.14rem 0.1rem;
+}
+
+.encoded-watch-gps-keyboard-row--actions-wide {
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  padding: 0 0.06rem;
+}
+
+.encoded-watch-gps-keyboard-row--actions-wide .encoded-watch-gps-key--wide {
+  border-radius: 10px 10px 10px 22px;
+}
+
+.encoded-watch-gps-keyboard-row--actions-wide .encoded-watch-gps-key--ok {
+  border-radius: 10px 10px 22px 10px;
+}
+
+.encoded-watch-gps-keyboard-row--actions-panel .encoded-watch-gps-key--ok {
+  border-radius: 10px 10px 22px 10px;
+}
+
+.encoded-watch-gps-keyboard-row--letters {
+  display: grid;
+  flex: 1 1 0;
+  gap: 0.14rem;
+  width: 100%;
+  min-height: 0;
+}
+
+.encoded-watch-gps-keyboard-row--actions {
+  display: grid;
+  gap: 0.14rem;
+  width: 100%;
+}
+
+.encoded-watch-gps-keyboard-row--actions-mini {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.encoded-watch-gps-keyboard-row--actions-panel {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.encoded-watch-gps-key,
+.encoded-watch-gps-key--letter {
+  box-sizing: border-box;
+}
+
+.encoded-watch-gps-key--letter {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 1.55rem;
+  padding: 0;
+  font-size: 0.64rem;
+  border-radius: 8px;
+}
+
+.encoded-watch-gps-keyboard--emoji-open,
+.encoded-watch-gps-keyboard--panel-open {
+  grid-template-rows: minmax(0, 26%) minmax(0, 74%);
+}
+
+.encoded-watch-gps-emoji-search {
+  display: flex;
+  align-items: center;
+  gap: 0.22rem;
+  flex-shrink: 0;
+  padding: 0.28rem 0.36rem;
+  margin-bottom: 0.12rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(18, 18, 18, 0.92);
+}
+
+.encoded-watch-gps-emoji-search-icon {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+.encoded-watch-gps-emoji-search-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  line-height: 1.3;
+  outline: none;
+}
+
+.encoded-watch-gps-emoji-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.encoded-watch-gps-emoji-search-clear {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.72rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.encoded-watch-gps-emoji-empty {
+  grid-column: 1 / -1;
+  margin: 0.35rem 0;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.encoded-watch-gps-emoji-picker {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.14rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.05rem 0;
+  align-content: start;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.encoded-watch-gps-symbol-picker {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.14rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.05rem 0;
+  align-content: start;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.encoded-watch-gps-symbol-picker::-webkit-scrollbar {
+  width: 4px;
+}
+
+.encoded-watch-gps-symbol-picker::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.encoded-watch-gps-emoji-picker::-webkit-scrollbar {
+  width: 4px;
+}
+
+.encoded-watch-gps-emoji-picker::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.encoded-watch-gps-key--emoji-pick {
+  min-width: 0;
+  width: 100%;
+  height: 1.75rem;
+  padding: 0;
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
+.encoded-watch-gps-key--symbol-pick {
+  min-width: 0;
+  width: 100%;
+  height: 1.75rem;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  line-height: 1;
+}
+
+.encoded-watch-gps-key--emoji-toggle,
+.encoded-watch-gps-key--abc,
+.encoded-watch-gps-key--symbols-toggle {
+  min-width: 0;
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+.encoded-watch-gps-key--symbols-toggle {
+  font-family: var(--mono);
+  font-size: 0.42rem;
+  letter-spacing: 0.02em;
+}
+
+.encoded-watch-gps-key--emoji-toggle {
+  font-size: 0.72rem;
+}
+
+.encoded-watch-gps-key--abc {
+  font-family: var(--mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.06em;
+}
+
+.encoded-watch-gps-keyboard-row--emoji {
+  gap: 0.14rem;
+}
+
+.encoded-watch-gps-keyboard-row--actions .encoded-watch-gps-key {
+  min-width: 0;
+  width: 100%;
+  height: 1.65rem;
+  padding: 0 0.1rem;
+}
+
+.encoded-watch-gps-key {
+  min-width: 0;
+  height: 1.65rem;
+  padding: 0 0.14rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(28, 28, 28, 0.96);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.encoded-watch-gps-key:hover {
+  border-color: rgba(120, 200, 255, 0.4);
+  background: rgba(40, 40, 40, 0.98);
+}
+
+.encoded-watch-gps-key--emoji {
+  min-width: 1.45rem;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.encoded-watch-gps-key--emoji-toggle[aria-pressed="true"],
+.encoded-watch-gps-keyboard--emoji-open .encoded-watch-gps-key--emoji-toggle {
+  border-color: rgba(120, 200, 255, 0.55);
+  background: rgba(36, 72, 110, 0.85);
+}
+
+.encoded-watch-gps-key--wide {
+  min-width: 0;
+  text-transform: lowercase;
+  font-size: 0.48rem;
+}
+
+.encoded-watch-gps-key--ok {
+  min-width: 0;
+  border-color: rgba(120, 200, 255, 0.45);
+  background: rgba(36, 72, 110, 0.95);
+  color: #ffffff;
+}
+
+.encoded-watch-gps-created {
+  background: radial-gradient(circle at 50% 30%, rgba(95, 185, 255, 0.12), #000000 62%);
+}
+
+.encoded-watch-gps-screen .encoded-watch-gps-created-icon,
+.encoded-watch-gps-screen .encoded-watch-gps-created-icon-mark {
+  display: flex;
+}
+
+.encoded-watch-gps-created-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: #ffffff;
+}
+
+.encoded-watch-gps-created-icon-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(120, 200, 255, 0.55);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: encoded-watch-gps-created-ring 1.75s ease-out infinite;
+}
+
+.encoded-watch-gps-created-icon-ring--b {
+  animation-delay: 0.42s;
+}
+
+.encoded-watch-gps-created-icon-mark {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  animation: encoded-watch-gps-created-pulse 1.35s ease-in-out infinite;
+}
+
+.encoded-watch-gps-created-icon-svg {
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(120, 200, 255, 0.45));
+}
+
+.encoded-watch-gps-created-icon-svg path {
+  transform-origin: center center;
+  animation: encoded-watch-gps-created-stroke 1.35s ease-in-out infinite;
+}
+
+@keyframes encoded-watch-gps-created-ring {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.55);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+@keyframes encoded-watch-gps-created-pulse {
+  0%,
+  100% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes encoded-watch-gps-created-stroke {
+  0%,
+  100% {
+    opacity: 0.55;
+    stroke-width: 1.5;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: 2.25;
+  }
+}
+
+.encoded-watch-gps-screen .encoded-watch-ping {
+  z-index: 4;
+}
+
+.encoded-watch-gps-screen .encoded-watch-clock {
+  z-index: 2;
+}
+
+.encoded-watch-ping {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: calc(100% - 1.4rem);
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(18, 18, 18, 0.94);
+  color: #ffffff;
+  text-align: left;
+  transform: translate(-50%, -50%);
+  animation: encoded-watch-ping-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 3;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.encoded-watch-ping-ring {
+  position: absolute;
+  left: 1.35rem;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(230, 186, 74, 0.35);
+  border-radius: 50%;
+  animation: encoded-watch-ping-ring 2.4s ease-out infinite;
+}
+
+.encoded-watch-ping-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 14px rgba(230, 186, 74, 0.8);
+  animation: encoded-watch-ping-pulse 2s ease-in-out infinite;
+}
+
+.encoded-watch-ping-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.encoded-watch-ping-copy strong {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.encoded-watch-ping-copy span {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@keyframes encoded-watch-ping-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 24%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes encoded-watch-ping-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+@keyframes encoded-watch-ping-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.75;
+  }
+}
+
+/* Frequency logged — success after double-tap confirm */
+.encoded-watch-logged {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+  background: #000000;
+  animation: encoded-watch-logged-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 4;
+}
+
+.encoded-watch-logged-check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.encoded-watch-logged-check-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(230, 186, 74, 0.45);
+  border-radius: 50%;
+  animation: encoded-watch-logged-ring 1.8s ease-out infinite;
+}
+
+.encoded-watch-logged-check-mark {
+  position: relative;
+  width: 1.15rem;
+  height: 0.65rem;
+  border-left: 2.5px solid var(--gold);
+  border-bottom: 2.5px solid var(--gold);
+  transform: rotate(-45deg) translateY(-2px);
+  animation: encoded-watch-logged-check 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.encoded-watch-logged-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.encoded-watch-logged-copy strong {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.encoded-watch-logged-copy span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.encoded-watch-logged-hint {
+  margin: 0.15rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes encoded-watch-logged-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes encoded-watch-logged-ring {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.82);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+@keyframes encoded-watch-logged-check {
+  0% {
+    opacity: 0;
+    transform: rotate(-45deg) translateY(-2px) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(-2px) scale(1);
+  }
+}
+
+/* Picker */
+.encoded-watch-picker {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+
+.encoded-watch-scroll-window {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.encoded-watch-scroll-track {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.34, 1.08, 0.48, 1);
+  will-change: transform;
+}
+
+.encoded-watch-scroll-item {
+  height: 100%;
+  width: 100%;
+}
+
+.encoded-watch-picker.is-scrolling .encoded-watch-scroll-window {
+  box-shadow: inset 0 18px 28px -18px rgba(0, 0, 0, 0.55), inset 0 -18px 28px -18px rgba(0, 0, 0, 0.55);
+}
+
+.encoded-watch-scroll-item.is-centered .encoded-watch-tier-screen {
+  filter: none;
+}
+
+.encoded-watch-picker-chrome {
+  position: absolute;
+  top: 50%;
+  right: 0.45rem;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.35rem;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.72) 40%, transparent);
+  border-radius: 999px;
+  z-index: 6;
+  pointer-events: auto;
+}
+
+.encoded-watch-picker-chrome .encoded-watch-picker-dots {
+  margin-top: 0;
+}
+
+.encoded-watch-picker-dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.encoded-watch-picker-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease;
+  cursor: none;
+}
+
+.encoded-watch-picker-dot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.65rem;
+  height: 1.65rem;
+  transform: translate(-50%, -50%);
+}
+
+.encoded-watch-picker-dot.is-active {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.35);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+/* Tier full screens */
+.encoded-watch-tier-screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+  animation: encoded-watch-tier-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-tier-screen--in-picker {
+  animation: none;
+}
+
+.encoded-watch-screen--draggable {
+  cursor: grab;
+}
+
+.encoded-watch-screen--draggable:active,
+.encoded-watch-picker.is-dragging {
+  cursor: grabbing;
+}
+
+.encoded-watch-picker.is-dragging {
+  user-select: none;
+}
+
+.encoded-watch-tier-screen.is-centered .encoded-watch-tier-screen-content {
+  transition:
+    transform 0.42s cubic-bezier(0.34, 1.08, 0.48, 1),
+    opacity 0.35s ease;
+}
+
+.encoded-watch-tier-screen-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0 0.85rem 2.8rem;
+}
+
+.encoded-watch-tier-screen.is-centered:not(.encoded-watch-tier-screen--in-picker) .encoded-watch-tier-screen-content {
+  gap: 0.35rem;
+}
+
+.encoded-watch-tier-screen--in-picker.is-centered .encoded-watch-tier-screen-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 0;
+  gap: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.encoded-watch-tier-screen-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  touch-action: none;
+}
+
+.encoded-watch-tier-screen--in-picker.is-centered .encoded-watch-tier-screen-scroll {
+  height: 100%;
+  pointer-events: none;
+  touch-action: none;
+}
+
+.encoded-watch-tier-screen-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.encoded-watch-tier-screen-page {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  min-height: 100%;
+  padding: 0 0.75rem 2.4rem;
+  box-sizing: border-box;
+}
+
+.encoded-watch-tier-screen-page--detail {
+  justify-content: center;
+  min-height: 100%;
+  padding: 1.1rem 0.85rem 2.2rem;
+}
+
+.encoded-watch-tier-screen.is-detail-open .encoded-watch-tier-screen-page--detail {
+  justify-content: center;
+}
+
+.encoded-watch-tier-screen.is-detail-open .encoded-watch-tier-screen-description {
+  max-width: 92%;
+}
+
+.encoded-watch-tier-screen-num {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.encoded-watch-tier-screen-name {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.encoded-watch-tier-screen.is-centered:not(.encoded-watch-tier-screen--in-picker) .encoded-watch-tier-screen-name {
+  font-size: 1.05rem;
+  line-height: 1.15;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+}
+
+.encoded-watch-tier-screen.is-centered:not(.encoded-watch-tier-screen--in-picker) .encoded-watch-tier-screen-num {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.encoded-watch-tier-screen-tagline {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.encoded-watch-tier-screen-description {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
+}
+
+.encoded-watch-tier-screen--1 { background: #0a0506; }
+.encoded-watch-tier-screen--2 { background: #0d0805; }
+.encoded-watch-tier-screen--3 { background: #0a0904; }
+.encoded-watch-tier-screen--4 { background: #040a0d; }
+.encoded-watch-tier-screen--5 { background: #08060f; }
+.encoded-watch-tier-screen--6 { background: #090909; }
+
+/* Frequency line — live oscillating sine wave (path animated in JS) */
+.encoded-watch-freq-anim {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.encoded-watch-freq-svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34%;
+  width: 100%;
+  height: 40%;
+}
+
+.encoded-watch-freq-wave {
+  opacity: 0.94;
+}
+
+.encoded-watch-freq-anim--signal .encoded-watch-freq-wave,
+.encoded-watch-freq-anim--chaotic .encoded-watch-freq-wave,
+.encoded-watch-freq-anim--fracture .encoded-watch-freq-wave {
+  shape-rendering: geometricPrecision;
+  stroke-width: 1.6;
+}
+
+.encoded-watch-freq-anim--pulse .encoded-watch-freq-wave,
+.encoded-watch-freq-anim--lattice .encoded-watch-freq-wave {
+  shape-rendering: geometricPrecision;
+  stroke-width: 1.45;
+}
+
+.encoded-watch-freq-anim--field .encoded-watch-freq-wave {
+  shape-rendering: geometricPrecision;
+  stroke-width: 1.5;
+  opacity: 0.92;
+}
+
+.encoded-watch-freq-baseline {
+  shape-rendering: geometricPrecision;
+}
+
+@keyframes encoded-watch-tier-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Side panel — guide lines to the right of the watch */
+.encoded-watch-side-panel {
+  width: min(280px, 88vw);
+  padding: 1.45rem 1.25rem;
+  border: 1px solid rgba(230, 186, 74, 0.14);
+  border-radius: 18px;
+  background:
+    linear-gradient(165deg, rgba(35, 35, 35, 0.92) 0%, rgba(18, 18, 18, 0.96) 100%);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transform: translateX(16px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    border-color 0.25s ease;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.encoded-watch-side-panel.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  border-color: rgba(230, 186, 74, 0.22);
+}
+
+.encoded-watch-gps-side-panel,
+.encoded-watch-signals-side-panel,
+.encoded-watch-logging-side-panel {
+  width: min(440px, calc(100% - 19rem));
+  max-width: 520px;
+  flex: 1 1 300px;
+  padding: 1.45rem 1.35rem;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  border-color: rgba(230, 186, 74, 0.16);
+}
+
+.encoded-watch-logging-side-panel {
+  width: min(280px, 88vw);
+  max-width: 320px;
+}
+
+.encoded-watch-signals-screen {
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+  cursor: none;
+}
+
+.encoded-watch-signals-screen *,
+.encoded-watch-signals-screen *::before,
+.encoded-watch-signals-screen *::after {
+  cursor: none;
+}
+
+.encoded-watch-signals-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.encoded-watch-signals-bg-tap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.encoded-watch-signals-screen--interactive {
+  cursor: none;
+}
+
+.encoded-watch-signals-wallpaper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(120, 200, 255, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 75% 85%, rgba(180, 120, 255, 0.5) 0%, transparent 52%),
+    radial-gradient(ellipse 110% 85% at 50% 50%, #1a2840 0%, #080e18 100%);
+}
+
+.encoded-watch-signals-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  z-index: 0;
+}
+
+.encoded-watch-signals-photo-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 0.08) 0%,
+    rgba(17, 17, 17, 0.18) 42%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+  z-index: 1;
+}
+
+.encoded-watch-signals-ping {
+  z-index: 4;
+}
+
+.encoded-watch-signals-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 1rem 0.85rem 2.75rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 5;
+  animation: encoded-watch-logged-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-signals-card--meetup {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: stretch;
+  justify-items: stretch;
+  padding: 0.72rem 0.62rem 2.45rem;
+  gap: 0.42rem;
+  background: #000000;
+  z-index: 10;
+  overflow: hidden;
+  text-align: center;
+}
+
+.encoded-watch-signals-meetup-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.38rem;
+  min-height: 0;
+  padding-top: 0.12rem;
+}
+
+.encoded-watch-signals-meetup-eyebrow {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(196, 164, 108, 0.88);
+}
+
+.encoded-watch-signals-meetup-title {
+  margin: 0;
+  max-width: 12rem;
+  font-family: var(--display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--white);
+}
+
+.encoded-watch-signals-meetup-location {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.encoded-watch-signals-meetup-when {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.32rem;
+  width: 100%;
+  margin-top: 0.18rem;
+}
+
+.encoded-watch-signals-meetup-date,
+.encoded-watch-signals-meetup-time {
+  padding: 0.42rem 0.32rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+}
+
+.encoded-watch-signals-meetup-time {
+  color: var(--gold-cta);
+  border-color: rgba(230, 186, 74, 0.22);
+  background: rgba(230, 186, 74, 0.08);
+}
+
+.encoded-watch-signals-meetup-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 0;
+}
+
+.encoded-watch-signals-meetup-rsvp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.42rem 0.5rem 0.38rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.encoded-watch-signals-meetup-prompt {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.encoded-watch-signals-meetup-signed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.06rem;
+  margin: 0;
+  text-align: center;
+}
+
+.encoded-watch-signals-meetup-signed strong {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.encoded-watch-signals-meetup-signed span {
+  font-family: var(--sans);
+  font-size: 0.46rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.encoded-watch-signals-meetup-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 100%;
+  height: 2.45rem;
+  margin: 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #000000;
+}
+
+.encoded-watch-signals-meetup-waves .encoded-watch-freq-anim {
+  position: absolute;
+  inset: 0;
+}
+
+.encoded-watch-signals-meetup-waves .encoded-watch-freq-svg {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.encoded-watch-signals-meetup-waves .encoded-watch-freq-wave {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.94;
+  filter: none;
+  animation: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.encoded-watch-signals-card--meetup .encoded-watch-signals-card-actions--meetup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.28rem;
+  width: 100%;
+  margin-top: 0;
+  padding: 0 0.02rem;
+}
+
+.encoded-watch-signals-card--meetup .encoded-watch-signals-card-actions--meetup .encoded-watch-signals-btn {
+  min-height: 1.82rem;
+  padding: 0.38rem 0.2rem;
+  border-radius: 999px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.encoded-gift-egg-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  border: 0;
+  background: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  animation: encoded-watch-logged-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-svg {
+  animation: encoded-gift-egg-wobble 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-fragment--left {
+  animation: encoded-gift-egg-split-left 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-fragment--right {
+  animation: encoded-gift-egg-split-right 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-fragment--top {
+  animation: encoded-gift-egg-split-top 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-cracks,
+.encoded-gift-egg-screen.is-cracking .encoded-gift-holo-egg-highlight,
+.encoded-gift-egg-screen.is-cracking .encoded-gift-holo-egg-aura,
+.encoded-gift-egg-screen.is-cracking .encoded-gift-holo-egg-scan,
+.encoded-gift-egg-screen.is-cracking .encoded-gift-egg-chamber-preview {
+  animation: encoded-gift-egg-fade 0.35s ease forwards;
+}
+
+.encoded-gift-egg-copy {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-body);
+}
+
+.encoded-gift-egg-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 7.25rem;
+}
+
+.encoded-gift-egg-svg {
+  width: 4.95rem;
+  height: 6.35rem;
+  overflow: visible;
+  filter:
+    drop-shadow(0 0 10px rgba(120, 220, 255, 0.35))
+    drop-shadow(0 0 18px rgba(230, 186, 74, 0.18));
+  transition: transform 0.1s ease;
+}
+
+.encoded-gift-holo-egg-intact {
+  animation: encoded-gift-holo-egg-float 3.2s ease-in-out infinite;
+}
+
+.encoded-gift-holo-egg-sheen {
+  animation: encoded-gift-holo-egg-pulse 2.8s ease-in-out infinite;
+}
+
+.encoded-gift-holo-egg-grid {
+  fill: none;
+  stroke: rgba(120, 220, 255, 0.28);
+  stroke-width: 0.35;
+  animation: encoded-gift-holo-grid-flicker 2.4s ease-in-out infinite;
+}
+
+.encoded-gift-holo-egg-scan-band {
+  fill: rgba(120, 220, 255, 0.22);
+  animation: encoded-gift-holo-scan-sweep 2.6s linear infinite;
+}
+
+.encoded-gift-holo-egg-body {
+  vector-effect: non-scaling-stroke;
+}
+
+.encoded-gift-egg-svg.is-tapped {
+  animation: encoded-gift-egg-tap-shake 0.14s ease;
+}
+
+.encoded-gift-egg-crack-path {
+  filter: drop-shadow(0 0 2px rgba(120, 220, 255, 0.45));
+}
+
+.encoded-gift-egg-impact {
+  animation: encoded-gift-egg-impact-ring 0.28s ease-out forwards;
+}
+
+.encoded-gift-egg-fragment {
+  transform-origin: 40px 54px;
+}
+
+@keyframes encoded-gift-holo-egg-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes encoded-gift-holo-egg-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@keyframes encoded-gift-holo-grid-flicker {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-gift-holo-scan-sweep {
+  0% {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(92px);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-tap-shake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-1px, 1px) rotate(-1.2deg);
+  }
+  75% {
+    transform: translate(1px, -1px) rotate(1.2deg);
+  }
+}
+
+@keyframes encoded-gift-egg-wobble {
+  0% {
+    transform: scale(1);
+  }
+  18% {
+    transform: scale(1.04) rotate(-1deg);
+  }
+  42% {
+    transform: scale(0.98) rotate(1.5deg);
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-split-left {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-9px, -10px) rotate(-16deg);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-split-right {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(10px, -8px) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-split-top {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -14px) rotate(4deg);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-egg-impact-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+.encoded-gift-egg-taps {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.encoded-gift-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem;
+  background: #000000;
+  cursor: pointer;
+  animation: encoded-watch-logged-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-gift-pass-flip {
+  position: relative;
+  width: 100%;
+  max-width: 12.5rem;
+  aspect-ratio: 0.72;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 900px;
+}
+
+.encoded-gift-pass-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.encoded-gift-pass-flip.is-flipped .encoded-gift-pass-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.encoded-gift-pass-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.encoded-gift-pass-flip-face--back {
+  transform: rotateY(180deg);
+}
+
+.encoded-gift-pass-flip-face--front .encoded-gift-nft-card,
+.encoded-gift-pass-flip-face--back .encoded-gift-nft-card {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+}
+
+.encoded-gift-nft-card--back {
+  display: flex;
+  flex-direction: column;
+  background: #030303;
+  animation: encoded-gift-nft-field-pulse 3.4s ease-in-out infinite;
+}
+
+.encoded-gift-pass-qr-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  padding: 0.85rem 0.65rem;
+  background: radial-gradient(
+    circle at 50% 42%,
+    color-mix(in srgb, var(--nft-accent) 16%, transparent) 0%,
+    #030303 58%
+  );
+}
+
+.encoded-gift-pass-qr-eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.44rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nft-accent);
+}
+
+.encoded-gift-pass-qr-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nft-accent) 35%, transparent),
+    0 0 18px var(--nft-glow);
+}
+
+.encoded-gift-pass-qr-code {
+  display: block;
+  width: 5.4rem !important;
+  height: 5.4rem !important;
+}
+
+.encoded-gift-pass-qr-id {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.encoded-gift-pass-qr-hint {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.44rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.encoded-gift-nft-card-flip-hint {
+  margin: 0.08rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.4rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.encoded-gift-nft-card {
+  position: relative;
+  width: 100%;
+  max-width: 12.5rem;
+  aspect-ratio: 0.72;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #020202;
+  animation: encoded-gift-nft-field-pulse 3.4s ease-in-out infinite;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nft-accent) 42%, transparent),
+    0 0 32px var(--nft-glow);
+}
+
+@keyframes encoded-gift-nft-field-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--nft-accent) 38%, transparent),
+      0 0 24px var(--nft-glow);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--nft-accent) 62%, transparent),
+      0 0 42px var(--nft-glow);
+  }
+}
+
+.encoded-gift-nft-card-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.encoded-gift-nft-card-corner {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-color: var(--nft-accent);
+  border-style: solid;
+  opacity: 0.9;
+}
+
+.encoded-gift-nft-card-corner--tl {
+  top: 0.35rem;
+  left: 0.35rem;
+  border-width: 2px 0 0 2px;
+}
+
+.encoded-gift-nft-card-corner--tr {
+  top: 0.35rem;
+  right: 0.35rem;
+  border-width: 2px 2px 0 0;
+}
+
+.encoded-gift-nft-card-corner--bl {
+  bottom: 0.35rem;
+  left: 0.35rem;
+  border-width: 0 0 2px 2px;
+}
+
+.encoded-gift-nft-card-corner--br {
+  right: 0.35rem;
+  bottom: 0.35rem;
+  border-width: 0 2px 2px 0;
+}
+
+.encoded-gift-nft-card-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #010101;
+}
+
+.encoded-gift-nft-card-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.22) 42%,
+    rgba(0, 0, 0, 0.88) 78%,
+    rgba(0, 0, 0, 0.96) 100%
+  );
+}
+
+.encoded-gift-nft-energy {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.encoded-gift-nft-energy-base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--nft-accent) 28%, transparent) 0%, transparent 52%),
+    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--nft-accent) 12%, transparent) 0%, transparent 38%),
+    radial-gradient(circle at 82% 78%, color-mix(in srgb, var(--nft-accent) 10%, transparent) 0%, transparent 40%),
+    #020202;
+}
+
+.encoded-gift-nft-energy-pulse {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  width: 8rem;
+  height: 8rem;
+  margin: -4rem 0 0 -4rem;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--nft-accent) 35%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.encoded-gift-nft-energy-pulse--a {
+  animation: encoded-gift-nft-energy-ring 3.2s ease-out infinite;
+}
+
+.encoded-gift-nft-energy-pulse--b {
+  animation: encoded-gift-nft-energy-ring 3.2s ease-out 1.6s infinite;
+}
+
+.encoded-gift-nft-energy-scan {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  height: 28%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--nft-accent) 18%, transparent) 48%,
+    transparent 100%
+  );
+  opacity: 0.55;
+  filter: blur(2px);
+  animation: encoded-gift-nft-energy-scan 4.8s linear infinite;
+  pointer-events: none;
+}
+
+.encoded-gift-nft-mesh {
+  position: absolute;
+  inset: -18%;
+  width: 136%;
+  height: 136%;
+  fill: none;
+  pointer-events: none;
+}
+
+.encoded-gift-nft-mesh--rotate-a {
+  animation: encoded-gift-nft-mesh-spin-a 22s linear infinite;
+}
+
+.encoded-gift-nft-mesh--rotate-b {
+  animation: encoded-gift-nft-mesh-spin-b 30s linear infinite;
+}
+
+.encoded-gift-nft-mesh-line {
+  stroke-width: 0.35;
+  stroke-linecap: round;
+  opacity: 0.22;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: encoded-gift-nft-mesh-flow 2.8s ease-in-out infinite alternate;
+}
+
+.encoded-gift-nft-mesh-ring {
+  stroke-width: 0.55;
+  stroke-linejoin: miter;
+  opacity: 0.38;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: encoded-gift-nft-mesh-draw 2.2s ease forwards, encoded-gift-nft-mesh-ring-pulse 3.6s ease-in-out infinite;
+}
+
+.encoded-gift-nft-mesh-corner {
+  stroke-width: 0.65;
+  stroke-linecap: square;
+  opacity: 0.48;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: encoded-gift-nft-mesh-draw 1.8s ease forwards;
+}
+
+.encoded-gift-nft-mesh-node {
+  opacity: 0.55;
+  animation: encoded-gift-nft-node-blink 2.4s ease-in-out infinite;
+}
+
+@keyframes encoded-gift-nft-energy-ring {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes encoded-gift-nft-energy-scan {
+  0% {
+    top: -30%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+@keyframes encoded-gift-nft-mesh-spin-a {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes encoded-gift-nft-mesh-spin-b {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes encoded-gift-nft-mesh-flow {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0.12;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.32;
+  }
+}
+
+@keyframes encoded-gift-nft-mesh-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes encoded-gift-nft-mesh-ring-pulse {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.52;
+  }
+}
+
+@keyframes encoded-gift-nft-node-blink {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.35);
+  }
+}
+
+.encoded-gift-nft-art {
+  position: absolute;
+  inset: 8% 6%;
+  z-index: 1;
+  width: 88%;
+  height: 88%;
+  opacity: 0.98;
+}
+
+.encoded-gift-chamber-pattern--primary {
+  transform-origin: 50% 58%;
+  animation: encoded-gift-chamber-breathe 4.2s ease-in-out infinite;
+}
+
+.encoded-gift-chamber-pattern--ghost {
+  transform-origin: 50% 58%;
+  animation: encoded-gift-chamber-ghost-pulse 5s ease-in-out infinite;
+}
+
+.encoded-gift-chamber-stroke {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: encoded-gift-chamber-draw 2.4s ease forwards, encoded-gift-chamber-shimmer 3.6s ease-in-out infinite;
+}
+
+@keyframes encoded-gift-chamber-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes encoded-gift-chamber-breathe {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.04) rotate(0.6deg);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-gift-chamber-ghost-pulse {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.42;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes encoded-gift-chamber-shimmer {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px var(--nft-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px var(--nft-glow));
+  }
+}
+
+.encoded-gift-nft-card-body {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  padding: 0.55rem 0.6rem 0.62rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.72) 22%, rgba(0, 0, 0, 0.96) 100%);
+}
+
+.encoded-gift-nft-card-eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.44rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.encoded-gift-nft-card-tier {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nft-accent);
+  text-shadow: 0 0 16px var(--nft-glow);
+}
+
+.encoded-gift-nft-card-id {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.encoded-gift-nft-card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  margin: 0.28rem 0 0;
+}
+
+.encoded-gift-nft-card-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.encoded-gift-nft-card-meta dt {
+  font-family: var(--mono);
+  font-size: 0.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.encoded-gift-nft-card-meta dd {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.encoded-gift-nft-card--opal .encoded-gift-nft-energy-base {
+  background:
+    radial-gradient(circle at 32% 38%, rgba(154, 232, 240, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 68% 62%, rgba(232, 168, 200, 0.18) 0%, transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(106, 88, 168, 0.12) 0%, transparent 55%),
+    #030303;
+}
+
+.encoded-gift-nft-card--pearl .encoded-gift-nft-card-tier {
+  color: #f2ece4;
+  text-shadow: 0 0 14px rgba(242, 236, 228, 0.35);
+}
+
+.encoded-gift-nft-card--onyx .encoded-gift-nft-card-tier {
+  color: #c8c8d0;
+  text-shadow: 0 0 12px rgba(120, 120, 140, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .encoded-gift-pass-flip-inner {
+    transition: none;
+  }
+
+  .encoded-gift-chamber-pattern--primary,
+  .encoded-gift-chamber-pattern--ghost,
+  .encoded-gift-chamber-stroke,
+  .encoded-gift-nft-card,
+  .encoded-gift-nft-mesh--rotate-a,
+  .encoded-gift-nft-mesh--rotate-b,
+  .encoded-gift-nft-mesh-line,
+  .encoded-gift-nft-mesh-ring,
+  .encoded-gift-nft-mesh-corner,
+  .encoded-gift-nft-mesh-node,
+  .encoded-gift-nft-energy-pulse,
+  .encoded-gift-nft-energy-scan {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .encoded-gift-egg-svg.is-tapped,
+  .encoded-gift-holo-egg-intact,
+  .encoded-gift-holo-egg-sheen,
+  .encoded-gift-holo-egg-grid,
+  .encoded-gift-holo-egg-scan-band {
+    animation: none;
+  }
+}
+
+.encoded-watch-signals-video {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  background: #000000;
+  animation: encoded-watch-logged-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-signals-unique-block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.encoded-watch-signals-unique-label {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.encoded-watch-signals-unique-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.encoded-watch-signals-unique-btn {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: linear-gradient(#242424, #1b1b1b);
+  color: var(--text-bright);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+
+.encoded-watch-signals-unique-btn:hover {
+  border-color: rgba(196, 164, 108, 0.45);
+  background: rgba(196, 164, 108, 0.08);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.encoded-watch-signals-unique-btn--phase2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  opacity: 0.88;
+}
+
+.encoded-watch-signals-unique-btn-phase {
+  flex-shrink: 0;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.encoded-watch-signals-unique-footnote {
+  margin: 0.35rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.encoded-watch-signals-card--question {
+  gap: 0.75rem;
+  padding: 1.15rem 0.85rem 1.15rem;
+  background: #000000;
+  z-index: 10;
+}
+
+.encoded-watch-signals-logo {
+  height: 14px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.encoded-watch-signals-card--question .encoded-watch-signals-card-question {
+  max-width: 11.5rem;
+  font-size: 0.84rem;
+  line-height: 1.32;
+}
+
+.encoded-watch-signals-card-eyebrow {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.encoded-watch-signals-card-question,
+.encoded-watch-signals-card-title {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.encoded-watch-signals-card-meta {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.encoded-watch-signals-card-actions {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.encoded-watch-signals-card-actions--duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.encoded-watch-signals-card-actions--trio {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.encoded-watch-signals-btn {
+  min-height: 1.85rem;
+  padding: 0.42rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--text-bright);
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+.encoded-watch-signals-btn--primary {
+  border-color: rgba(230, 186, 74, 0.55);
+  background: var(--gold-cta);
+  color: #111111;
+  box-shadow: 0 4px 14px rgba(230, 186, 74, 0.18);
+}
+
+.encoded-watch-signals-btn--secondary {
+  border-color: rgba(196, 164, 108, 0.45);
+  background: rgba(196, 164, 108, 0.1);
+  color: var(--white);
+}
+
+.encoded-watch-signals-btn--ghost {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(18, 18, 18, 0.94);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.encoded-watch-signals-btn:hover {
+  transform: translateY(-1px);
+}
+
+.encoded-watch-signals-btn--primary:hover {
+  border-color: rgba(230, 186, 74, 0.72);
+  background: #f0c85a;
+  box-shadow: 0 6px 18px rgba(230, 186, 74, 0.28);
+}
+
+.encoded-watch-signals-btn--secondary:hover {
+  border-color: rgba(230, 186, 74, 0.72);
+  background: rgba(230, 186, 74, 0.14);
+}
+
+.encoded-watch-signals-btn--ghost:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(29, 29, 29, 0.98);
+}
+
+.encoded-watch-signals-thanks {
+  z-index: 10;
+}
+
+.encoded-watch-signals-thanks .encoded-watch-logged-copy strong {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.encoded-watch-signals-side-panel .encoded-watch-side-instruction {
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  color: var(--text-body);
+}
+
+.encoded-watch-side-line--signals {
+  align-items: flex-start;
+  animation-delay: 0s;
+}
+
+.encoded-watch-signals-screen .encoded-watch-ping {
+  z-index: 4;
+}
+
+.encoded-watch-signals-screen .encoded-watch-clock--photo {
+  z-index: 8;
+}
+
+.encoded-watch-side-signals-icon {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 1.65rem;
+}
+
+.encoded-watch-side-signals-wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--gold);
+  transform-origin: center center;
+}
+
+.encoded-watch-side-signals-wave--a {
+  top: 0.35rem;
+  animation: encoded-watch-side-signals-wave-a 1.6s ease-in-out infinite;
+}
+
+.encoded-watch-side-signals-wave--b {
+  top: 0.72rem;
+  animation: encoded-watch-side-signals-wave-b 1.6s ease-in-out 0.18s infinite;
+}
+
+.encoded-watch-side-signals-wave--c {
+  top: 1.1rem;
+  animation: encoded-watch-side-signals-wave-c 1.6s ease-in-out 0.36s infinite;
+}
+
+@keyframes encoded-watch-side-signals-wave-a {
+  0%,
+  100% {
+    transform: scaleX(0.55);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-side-signals-wave-b {
+  0%,
+  100% {
+    transform: scaleX(0.72);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleX(0.92);
+    opacity: 0.95;
+  }
+}
+
+@keyframes encoded-watch-side-signals-wave-c {
+  0%,
+  100% {
+    transform: scaleX(0.48);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleX(0.85);
+    opacity: 0.88;
+  }
+}
+
+.encoded-watch-app-panel:nth-child(1) .encoded-watch-stage,
+.encoded-watch-app-panel:nth-child(2) .encoded-watch-stage,
+.encoded-watch-app-panel:nth-child(3) .encoded-watch-stage {
+  width: min(920px, 100%);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+.encoded-watch-app-panel:nth-child(2) .encoded-watch-prototype-scale,
+.encoded-watch-app-panel:nth-child(3) .encoded-watch-prototype-scale {
+  --encoded-watch-scale: clamp(0.78, 0.18vw + 0.72, 1.02);
+  flex-shrink: 0;
+}
+
+.encoded-watch-gps-side-panel .encoded-watch-side-line--gps {
+  gap: 1.15rem;
+}
+
+.encoded-watch-gps-side-panel .encoded-watch-side-instruction {
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+}
+
+.encoded-watch-side-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  animation: encoded-watch-side-guide-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.encoded-watch-side-line--confirm {
+  animation-delay: 0.08s;
+}
+
+.encoded-watch-side-line--swipe {
+  animation-delay: 0.16s;
+}
+
+.encoded-watch-side-line--gps {
+  animation-delay: 0s;
+}
+
+.encoded-watch-side-line--twofinger {
+  animation-delay: 0.1s;
+}
+
+/* Two-finger tap icon beside Create GPS location instruction */
+.encoded-watch-side-twofinger-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.35rem;
+  height: 2.2rem;
+}
+
+.encoded-watch-side-twofinger-dot {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+  z-index: 2;
+}
+
+.encoded-watch-side-twofinger-dot--left {
+  left: 0.35rem;
+  animation: encoded-watch-side-twofinger-dot-left 1.8s ease-in-out infinite;
+}
+
+.encoded-watch-side-twofinger-dot--right {
+  right: 0.35rem;
+  animation: encoded-watch-side-twofinger-dot-right 1.8s ease-in-out infinite;
+}
+
+.encoded-watch-side-twofinger-ring {
+  position: absolute;
+  top: 50%;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: -0.675rem;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.encoded-watch-side-twofinger-ring--left {
+  left: 0.05rem;
+  animation: encoded-watch-side-twofinger-ring 1.8s ease-out infinite;
+}
+
+.encoded-watch-side-twofinger-ring--right {
+  right: 0.05rem;
+  animation: encoded-watch-side-twofinger-ring 1.8s ease-out 0.38s infinite;
+}
+
+.encoded-watch-side-line--twofinger:has(.encoded-watch-side-instruction--active)
+  .encoded-watch-side-twofinger-dot {
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(230, 186, 74, 0.55);
+}
+
+.encoded-watch-side-line--twofinger:has(.encoded-watch-side-instruction--active)
+  .encoded-watch-side-twofinger-ring {
+  border-color: rgba(230, 186, 74, 0.9);
+}
+
+@keyframes encoded-watch-side-twofinger-ring {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.35);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes encoded-watch-side-twofinger-dot-left {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  18% {
+    transform: scale(0.82);
+    opacity: 0.65;
+  }
+  36% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-side-twofinger-dot-right {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  38% {
+    transform: scale(0.82);
+    opacity: 0.65;
+  }
+  56% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* GPS stick-in pin — monochrome white 📍 drops and plants into surface */
+.encoded-watch-side-gps-stick-icon {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 2.35rem;
+  padding-top: 0.15rem;
+}
+
+.encoded-watch-side-gps-stick-pin {
+  position: relative;
+  width: 22px;
+  height: 30px;
+  transform-origin: 50% 92%;
+  animation: encoded-watch-gps-stick-in 2.35s cubic-bezier(0.34, 1.2, 0.48, 1) infinite;
+  filter: none;
+}
+
+.encoded-watch-side-gps-stick-pin-head {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 17px;
+  height: 17px;
+  margin-left: -8.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.encoded-watch-side-gps-stick-pin-point {
+  position: absolute;
+  left: 50%;
+  top: 13px;
+  width: 0;
+  height: 0;
+  margin-left: -7px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 14px solid #ffffff;
+}
+
+.encoded-watch-side-gps-stick-surface {
+  width: 15px;
+  height: 2px;
+  margin-top: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scaleX(0);
+  animation: encoded-watch-gps-stick-surface 2.35s ease-out infinite;
+}
+
+@keyframes encoded-watch-gps-stick-in {
+  0% {
+    transform: translateY(-22px) scale(0.72) rotate(-10deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  52% {
+    transform: translateY(3px) scale(1.06) rotate(3deg);
+    opacity: 1;
+  }
+  62% {
+    transform: translateY(-2px) scale(0.97) rotate(-2deg);
+  }
+  72%,
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-gps-stick-surface {
+  0%,
+  48% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  56%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.encoded-watch-side-instruction {
+  margin: 0;
+  flex: 1;
+  font-family: var(--sans);
+  font-size: clamp(0.98rem, 2.1vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+}
+
+.encoded-watch-side-instruction--hint {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.encoded-watch-side-instruction--active {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Swipe-left hint icon (line 3) */
+.encoded-watch-side-swipe-left-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  width: 2rem;
+  padding-top: 0.1rem;
+}
+
+.encoded-watch-side-swipe-left-icon-hand {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+  animation: encoded-watch-side-swipe-hand 1.7s ease-in-out infinite;
+}
+
+.encoded-watch-side-swipe-left-icon-track {
+  position: relative;
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+.encoded-watch-side-swipe-left-icon-thumb {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  animation: encoded-watch-side-swipe-thumb 1.7s ease-in-out infinite;
+}
+
+.encoded-watch-side-swipe-left-icon-arrow {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.75);
+  transform: rotate(135deg);
+  animation: encoded-watch-side-swipe-arrow 1.7s ease-in-out infinite;
+}
+
+@keyframes encoded-watch-side-swipe-hand {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateX(-0.55rem);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-side-swipe-thumb {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateX(-0.75rem);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-side-swipe-arrow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: rotate(135deg) translateX(2px);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(135deg) translateX(-3px);
+  }
+}
+
+/* Scroll up/down icon beside drag instruction */
+.encoded-watch-side-scroll-icon {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 1.35rem;
+}
+
+.encoded-watch-side-scroll-icon-arrow {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.75);
+}
+
+.encoded-watch-side-scroll-icon-arrow--up {
+  transform: rotate(-135deg);
+  animation: encoded-watch-side-scroll-arrow-up 1.6s ease-in-out infinite;
+}
+
+.encoded-watch-side-scroll-icon-arrow--down {
+  transform: rotate(45deg);
+  animation: encoded-watch-side-scroll-arrow-down 1.6s ease-in-out infinite;
+}
+
+.encoded-watch-side-scroll-icon-track {
+  position: relative;
+  width: 3px;
+  height: 1.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+
+.encoded-watch-side-scroll-icon-thumb {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+  animation: encoded-watch-side-scroll-thumb 1.6s ease-in-out infinite;
+}
+
+@keyframes encoded-watch-side-scroll-thumb {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(1.15rem);
+    opacity: 1;
+  }
+}
+
+@keyframes encoded-watch-side-scroll-arrow-up {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: rotate(-135deg) translateY(2px);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(-135deg) translateY(-2px);
+  }
+}
+
+@keyframes encoded-watch-side-scroll-arrow-down {
+  0%,
+  100% {
+    opacity: 1;
+    transform: rotate(45deg) translateY(-2px);
+  }
+  50% {
+    opacity: 0.35;
+    transform: rotate(45deg) translateY(2px);
+  }
+}
+
+/* Double-tap icon beside confirm instruction */
+.encoded-watch-side-doubletap-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.encoded-watch-side-doubletap-icon-dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+  z-index: 2;
+}
+
+.encoded-watch-side-doubletap-icon-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.65rem;
+  height: 1.65rem;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.encoded-watch-side-doubletap-icon-ring--first {
+  animation: encoded-watch-side-doubletap-ring 1.8s ease-out infinite;
+}
+
+.encoded-watch-side-doubletap-icon-ring--second {
+  animation: encoded-watch-side-doubletap-ring 1.8s ease-out 0.38s infinite;
+}
+
+.encoded-watch-side-line--confirm:has(.encoded-watch-side-instruction--active)
+  .encoded-watch-side-doubletap-icon-dot {
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(230, 186, 74, 0.55);
+}
+
+.encoded-watch-side-line--confirm:has(.encoded-watch-side-instruction--active)
+  .encoded-watch-side-doubletap-icon-ring {
+  border-color: rgba(230, 186, 74, 0.9);
+}
+
+@keyframes encoded-watch-side-doubletap-ring {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.4);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+
+@keyframes encoded-watch-side-guide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tablet + mobile — all three watch prototype panels */
+@media (max-width: 1024px) {
+  .encoded-watch-app-main {
+    --encoded-watch-scale: clamp(0.7, 0.09vw + 0.64, 0.92);
+    min-height: auto;
+  }
+
+  .encoded-watch-app-hero {
+    max-width: none;
+    padding-inline: clamp(1rem, 3vw, 1.75rem);
+  }
+
+  .encoded-watch-app-subnav {
+    gap: 0.3rem;
+    padding-inline: clamp(0.75rem, 2.5vw, 1.5rem);
+  }
+
+  .encoded-watch-app-panel-tab {
+    padding: 0.3rem 0.55rem;
+  }
+
+  .encoded-watch-app-demo {
+    padding-inline: clamp(0.75rem, 2.5vw, 1.25rem);
+  }
+
+  .encoded-watch-app-demo-glow {
+    width: min(560px, 95vw);
+    height: min(340px, 45vh);
+  }
+
+  .encoded-watch-app-panel:nth-child(1) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(2) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(3) .encoded-watch-prototype-scale {
+    --encoded-watch-scale: clamp(0.68, 0.08vw + 0.6, 0.88);
+  }
+
+  .encoded-watch-side-instruction {
+    font-size: clamp(0.84rem, 1.9vw, 0.96rem);
+    line-height: 1.46;
+  }
+
+  .encoded-watch-gps-bar {
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
+  .encoded-watch-gps-activity-btn {
+    padding: 0.85rem 1.5rem;
+    font-size: clamp(0.72rem, 2.2vw, 0.86rem);
+    letter-spacing: 0.09em;
+  }
+}
+
+@media (max-width: 860px) {
+  .encoded-watch-app-main {
+    --encoded-watch-scale: clamp(0.58, 0.12vw + 0.52, 0.82);
+  }
+
+  .encoded-watch-app-hero {
+    padding-top: clamp(1.35rem, 4vw, 2rem);
+    padding-bottom: clamp(0.75rem, 2vw, 1rem);
+  }
+
+  .encoded-watch-app-hero-title {
+    font-size: clamp(1.65rem, 7vw, 2.25rem);
+  }
+
+  .encoded-watch-app-hero-lead {
+    margin-bottom: clamp(1rem, 2.5vw, 1.35rem);
+    font-size: clamp(0.88rem, 2.4vw, 1rem);
+  }
+
+  .encoded-watch-app-subnav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.55rem;
+  }
+
+  .encoded-watch-app-subnav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .encoded-watch-app-panel-tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .encoded-watch-app-hero-panel-blurb {
+    text-align: center;
+    border-left: 0;
+    padding-inline: 0.15rem;
+    max-width: none;
+  }
+
+  .encoded-watch-app-build-plan-hint {
+    max-width: none;
+    border-radius: 14px;
+    line-height: 1.5;
+  }
+
+  .encoded-watch-app-demo {
+    padding-inline: clamp(0.5rem, 2vw, 0.85rem);
+  }
+
+  .encoded-watch-app-demo-frame {
+    padding: clamp(0.85rem, 2vw, 1.15rem) clamp(0.55rem, 1.5vw, 0.85rem) clamp(1rem, 2vw, 1.35rem);
+    border-radius: 18px;
+  }
+
+  .encoded-watch-app-demo-title {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  .encoded-watch-stage {
+    flex-direction: column;
+    width: 100%;
+    gap: clamp(0.85rem, 2.5vw, 1.35rem);
+  }
+
+  .encoded-watch-stage > .encoded-watch-prototype-scale {
+    order: 1;
+  }
+
+  .encoded-watch-stage > .encoded-watch-side-panel,
+  .encoded-watch-stage > .encoded-watch-gps-side-panel,
+  .encoded-watch-stage > .encoded-watch-signals-side-panel,
+  .encoded-watch-stage > .encoded-watch-logging-side-panel {
+    order: 2;
+  }
+
+  .encoded-watch-app-panel:nth-child(1) .encoded-watch-stage,
+  .encoded-watch-app-panel:nth-child(2) .encoded-watch-stage,
+  .encoded-watch-app-panel:nth-child(3) .encoded-watch-stage {
+    width: 100%;
+    gap: clamp(0.85rem, 2.5vw, 1.35rem);
+  }
+
+  .encoded-watch-prototype-scale {
+    max-width: min(360px, calc(100vw - 2.25rem));
+  }
+
+  .encoded-watch-app-panel:nth-child(1) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(2) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(3) .encoded-watch-prototype-scale {
+    --encoded-watch-scale: min(0.82, calc((100vw - 2.75rem) / 360));
+  }
+
+  .encoded-watch-side-panel,
+  .encoded-watch-gps-side-panel,
+  .encoded-watch-signals-side-panel,
+  .encoded-watch-logging-side-panel {
+    width: 100%;
+    max-width: min(480px, 100%);
+    flex: 1 1 auto;
+    transform: translateY(12px);
+  }
+
+  .encoded-watch-side-panel.is-visible,
+  .encoded-watch-gps-side-panel.is-visible,
+  .encoded-watch-signals-side-panel.is-visible,
+  .encoded-watch-logging-side-panel.is-visible {
+    transform: translateY(0);
+  }
+
+  .encoded-watch-side-instruction {
+    font-size: clamp(0.8rem, 2.3vw, 0.9rem);
+  }
+
+  .encoded-watch-gps-bar {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .encoded-watch-gps-activity-btn {
+    max-width: min(22rem, 100%);
+    text-align: center;
+  }
+
+  .encoded-watch-gps-bar--with-build-plan {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .encoded-watch-gps-bar--with-build-plan .encoded-watch-gps-activity-btn {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .encoded-watch-app-main {
+    --encoded-watch-scale: min(0.8, calc((100vw - 2rem) / 360));
+  }
+
+  .encoded-watch-app-hero {
+    padding-inline: 0.85rem;
+  }
+
+  .encoded-watch-app-hero-title {
+    font-size: clamp(1.45rem, 8.5vw, 1.85rem);
+  }
+
+  .encoded-watch-app-subnav {
+    padding-inline: 0.65rem;
+  }
+
+  .encoded-watch-app-panel-tab {
+    padding: 0.28rem 0.5rem;
+  }
+
+  .encoded-watch-app-panel-tab-label {
+    font-size: 0.56rem;
+  }
+
+  .encoded-watch-app-carousel-viewport {
+    padding-inline: 0;
+  }
+
+  .encoded-watch-app-panel {
+    padding-inline: 0.1rem;
+  }
+
+  .encoded-watch-app-panel:nth-child(1) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(2) .encoded-watch-prototype-scale,
+  .encoded-watch-app-panel:nth-child(3) .encoded-watch-prototype-scale {
+    --encoded-watch-scale: min(0.78, calc((100vw - 2rem) / 360));
+    max-width: calc(100vw - 2rem);
+  }
+
+  .encoded-watch-stage {
+    gap: 0.75rem;
+  }
+
+  .encoded-watch-side-panel,
+  .encoded-watch-gps-side-panel,
+  .encoded-watch-signals-side-panel,
+  .encoded-watch-logging-side-panel {
+    padding: 1rem 0.9rem;
+    gap: 1.15rem;
+    max-width: 100%;
+    border-radius: 14px;
+  }
+
+  .encoded-watch-side-line {
+    gap: 0.7rem;
+  }
+
+  .encoded-watch-side-instruction {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .encoded-watch-signals-unique-label {
+    font-size: 0.68rem;
+  }
+
+  .encoded-watch-signals-unique-btn {
+    font-size: 0.66rem;
+    padding: 0.48rem 0.7rem;
+  }
+
+  .encoded-watch-signals-unique-footnote {
+    font-size: 0.6rem;
+  }
+
+  .encoded-watch-app-demo {
+    padding-inline: 0.45rem;
+  }
+
+  .encoded-watch-app-demo-frame {
+    border-radius: 14px;
+    padding: 0.75rem 0.45rem 0.85rem;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38);
+  }
+
+  .encoded-watch-app-demo-header {
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .encoded-watch-gps-bar {
+    padding: 0.65rem 0.65rem 0.85rem;
+  }
+
+  .encoded-watch-gps-activity-btn {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+  }
+
+  .encoded-watch-build-plan-card {
+    padding: clamp(4.25rem, 14vw, 5rem) 1rem 1.75rem;
+  }
 }
 
 .encoded-accel-scroll-layout {
