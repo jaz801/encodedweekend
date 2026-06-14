@@ -6,6 +6,7 @@
 // Fixed: grey card bg — full animated geometric energy mesh powers each minted NFT card.
 // Added: entry pass card flip — tap front to reveal QR code back; tap backdrop to close.
 // Fixed: hologram egg — single intact shell (no fragment seam stripes); gold/cyan holo, cracks on tap only.
+// Fixed: mobile card flip — front geometric mesh bled through; back is solid black with QR only.
 
 "use client";
 
@@ -184,24 +185,8 @@ function EncodedNftCard({ nft }: { nft: EncodedGiftNft }) {
 
 function EntryPassQrBack({ nft }: { nft: EncodedGiftNft }) {
   return (
-    <div
-      className={`encoded-gift-nft-card encoded-gift-nft-card--back encoded-gift-nft-card--${nft.tier.id}`}
-      style={
-        {
-          "--nft-accent": nft.tier.accent,
-          "--nft-glow": nft.tier.glow,
-          "--nft-sheen": nft.tier.sheen,
-        } as CSSProperties
-      }
-    >
-      <div className="encoded-gift-nft-card-frame" aria-hidden="true">
-        <span className="encoded-gift-nft-card-corner encoded-gift-nft-card-corner--tl" />
-        <span className="encoded-gift-nft-card-corner encoded-gift-nft-card-corner--tr" />
-        <span className="encoded-gift-nft-card-corner encoded-gift-nft-card-corner--bl" />
-        <span className="encoded-gift-nft-card-corner encoded-gift-nft-card-corner--br" />
-      </div>
+    <div className="encoded-gift-nft-card encoded-gift-nft-card--back">
       <div className="encoded-gift-pass-qr-body">
-        <p className="encoded-gift-pass-qr-eyebrow">Verify entry</p>
         <div className="encoded-gift-pass-qr-frame">
           <QRCode
             value={entryPassVerifyUrl(nft.tokenId)}
@@ -212,8 +197,6 @@ function EntryPassQrBack({ nft }: { nft: EncodedGiftNft }) {
             className="encoded-gift-pass-qr-code"
           />
         </div>
-        <p className="encoded-gift-pass-qr-id">{nft.tokenId}</p>
-        <p className="encoded-gift-pass-qr-hint">Tap to flip back</p>
       </div>
     </div>
   );

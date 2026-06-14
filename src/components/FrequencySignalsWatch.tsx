@@ -11,6 +11,7 @@
 // Fixed: side panel copy in ENCODED voice; meetup first in demo order; entry passes marked phase 2.
 // Added: Build Plan overlay on watch — triggered from bottom bar on this page only.
 // Fixed: Build Plan overlay moved to full-screen layer in EncodedAppleWatchAppExperience.
+// Fixed: custom watch cursor stuck on mobile — only show on fine-pointer / hover-capable devices.
 
 "use client";
 
@@ -21,6 +22,7 @@ import { TierFrequencyAnimation } from "@/components/TierFrequencyAnimation";
 import { WatchClockFace } from "@/components/WatchClockFace";
 import { WatchDeviceShell } from "@/components/WatchDeviceShell";
 import { WearableTeaserWatchVideo } from "@/components/WearableTeaserWatchVideo";
+import { useFinePointer } from "@/hooks/useFinePointer";
 import { FREQUENCY_TIERS } from "@/lib/frequencyTiers";
 
 type Phase =
@@ -250,6 +252,7 @@ function FrequencySignalsSidePanel({
 }
 
 export function FrequencySignalsWatch() {
+  const hasFinePointer = useFinePointer();
   const [phase, setPhase] = useState<Phase>("clock");
   const [cursor, setCursor] = useState<CursorState>({ x: 0, y: 0, visible: false });
 
@@ -257,14 +260,19 @@ export function FrequencySignalsWatch() {
     setPhase("clock");
   }, []);
 
-  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setCursor({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-      visible: true,
-    });
-  }, []);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (!hasFinePointer) return;
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      setCursor({
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+        visible: true,
+      });
+    },
+    [hasFinePointer],
+  );
 
   const hideCursor = useCallback(() => {
     setCursor((current) => ({ ...current, visible: false }));
@@ -357,7 +365,7 @@ export function FrequencySignalsWatch() {
               ) : null}
               {phase === "meetupThanks" ? <ThanksScreen message="Thank you" /> : null}
 
-              {cursor.visible ? (
+              {hasFinePointer && cursor.visible ? (
                 <span
                   className="encoded-watch-screen-cursor"
                   style={{ transform: `translate(${cursor.x}px, ${cursor.y}px)` }}

@@ -19,6 +19,7 @@
 // Fixed: activity icon animated on success screen; tier removed — GPS activity only.
 // Fixed: activity icon pulse + ring animation — wrapper target so SVG animates reliably.
 // Fixed: GPS copy — log once, then GPS auto-tracking for effortless activity tracking matched with frequency.
+// Fixed: custom watch cursor stuck on mobile — only show on fine-pointer / hover-capable devices.
 
 "use client";
 
@@ -30,6 +31,7 @@ import {
 } from "@/components/AppleWatchPrototype";
 import { WatchClockFace } from "@/components/WatchClockFace";
 import { WatchDeviceShell } from "@/components/WatchDeviceShell";
+import { useFinePointer } from "@/hooks/useFinePointer";
 import { FREQUENCY_TIERS, type FrequencyTier } from "@/lib/frequencyTiers";
 
 type Phase = "clock" | "ping" | "picker" | "create" | "keyboard" | "created";
@@ -468,6 +470,7 @@ function DualTouchpoints({ x, y }: { x: number; y: number }) {
 }
 
 export function GpsActivityWatch() {
+  const hasFinePointer = useFinePointer();
   const [phase, setPhase] = useState<Phase>("clock");
   const [scrollPosition, setScrollPosition] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -683,14 +686,19 @@ export function GpsActivityWatch() {
     [phase, scrollPosition, snapToIndex],
   );
 
-  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setCursor({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-      visible: true,
-    });
-  }, []);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (!hasFinePointer) return;
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      setCursor({
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+        visible: true,
+      });
+    },
+    [hasFinePointer],
+  );
 
   const hideCursor = useCallback(() => {
     setCursor((current) => ({ ...current, visible: false }));
@@ -724,7 +732,7 @@ export function GpsActivityWatch() {
 
   const activeTier = FREQUENCY_TIERS[selectedIndex];
   const showWallpaper = phase === "clock" || phase === "ping";
-  const showDualTouchpoints = phase === "picker" && cursor.visible;
+  const showDualTouchpoints = phase === "picker" && hasFinePointer && cursor.visible;
   const interactiveScreen = phase !== "clock";
 
   return (
@@ -772,7 +780,7 @@ export function GpsActivityWatch() {
 
               {showDualTouchpoints ? <DualTouchpoints x={cursor.x} y={cursor.y} /> : null}
 
-              {cursor.visible && interactiveScreen && !showDualTouchpoints ? (
+              {hasFinePointer && cursor.visible && interactiveScreen && !showDualTouchpoints ? (
                 <span
                   className="encoded-watch-screen-cursor"
                   style={{ transform: `translate(${cursor.x}px, ${cursor.y}px)` }}
